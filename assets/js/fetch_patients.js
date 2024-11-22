@@ -13,7 +13,7 @@ function calculateAge(birthDateString) {
 }
 
 // Fetch the JSON data from the PHP script
-fetch('../../functions/fetch_patients.inc.php')
+fetch('../../functions/patients.inc.php?type=getPatients')
 .then(response => response.json())
 .then(data => {
     // Check if data is an array (contains patients) or if it's an error message
@@ -26,31 +26,31 @@ fetch('../../functions/fetch_patients.inc.php')
             const modal = document.createElement('div');
 
 
-            row.setAttribute('data-id', patient["Patient ID"]);
+            row.setAttribute('data-id', patient["id"]);
             // console.log(patient["Patient ID"]);
-            age = calculateAge(patient["Age"])
+            date_of_birth = toString(patient["date_of_birth"]);
+            console.log(date_of_birth)
+            age = calculateAge(date_of_birth);
 
             console.log(age);
-            fullName = patient["first_name"] + ' ' + patient["last_name"]
-            console.log(patient['first_name']);
             
 
             row.innerHTML = `
-                <td>${patient["Patient ID"]}</td>
-                <td>${fullName}</td>
-                <td>${age}</td>
-                <td>${patient["Gender"]}</td>
-                <td>${patient["Admission Date"]}</td>
-                <td><div class="status ${patient["Status"]}">${patient["Status"]}</div></td>
+                <td>${patient["id"]}</td>
+                <td>${patient['name']}</td>
+                <td>${patient['age'] !== null ? patient['age'] : 'N/A'}</td>
+                <td>${patient["gender"]}</td>
+                <td>${patient["admission_date"]}</td>
+                <td><div class="status ${patient["status"]}">${patient["status"]}</div></td>
                 <td>
                     <div class="selected-actions" id="selectedActions">
-                        <button type="button" class="action-btn edit-btn" data-id="${patient["Patient ID"]}">
+                        <button type="button" class="action-btn edit-btn" data-id="${patient["id"]}">
                             <span class="action-icon">✏️</span> Edit
                         </button>
-                        <button class="action-btn remove-btn" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="${patient["Patient ID"]}">
+                        <button class="action-btn remove-btn" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="${patient["id"]}">
                             <span class="action-icon">🗑️</span> Remove
                         </button>
-                        <button class="action-btn open-btn" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient["Patient ID"]}">
+                        <button class="action-btn open-btn" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient["id"]}">
                             <span class="action-icon">📂</span> Open
                         </button>
                     </div>

@@ -25,7 +25,7 @@
 
         <!-- Stats Row -->
         <div class="row">
-            <div class="row">
+        <div class="row">
                 <div class="col-md-6">
                     <div class="stat-card primary">
                         <div class="d-flex justify-content-between">
@@ -34,6 +34,31 @@
                                 <h2 id="active-patients-count" class="count">0</h2>
                             </div>
                             <button class="see-details align-self-start" id="active-patients" onclick="openModal('patients')">See Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="stat-card dark">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div>Critical Patients</div>
+                                <h2 id="critical-patients-count" class="count">0</h2>
+                            </div>
+                            <button class="see-details align-self-start" onclick="openModal('critical')">See Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="stat-card dark">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div>Appointments</div>
+                                <h2 id="pending-appointments-count" class="count">0</h2>
+                            </div>
+                            <button class="see-details align-self-start" onclick="openModal('appointments')">See Details</button>
                         </div>
                     </div>
                 </div>
@@ -50,22 +75,14 @@
                     </div>
                 </div>
             </div>
-            
         </div>
 
         <!-- Charts Row -->
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-12">
                 <div class="chart-card">
                     <h6 class="sm-4">Patient Status Distribution</h6>
                     <canvas id="patient-status" width="500px" height="300px" border-radius=8px></canvas>
-                </div>
-            </div>
-
-            <div class='col-md-7'>
-                <div class="chart-card">
-                    <h6 class="mb-4">Patient by Department</h6>
-                    <canvas id="patient-by-department" height="200px"></canvas>
                 </div>
             </div>
         </div>

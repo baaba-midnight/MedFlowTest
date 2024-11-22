@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 
 function sendResponse($data, $statusCode=200) {
     http_response_code($statusCode);
-
+    
     if ($data === "success") {
         echo $data;
     } else {
@@ -16,7 +16,7 @@ function sendResponse($data, $statusCode=200) {
 }
 
 function handleError($e) {
-    sendResponse(['error' => 'Database error: ' . $e->getMessage()], 500);
+    sendResponse(['error' => 'Database error: ' . $e->GETMessage()], 500);
 }
 
 function getPatients($conn) {
@@ -33,7 +33,7 @@ function getPatients($conn) {
         $stmt = $conn->prepare($sql);
 
         if ($stmt->execute()) {
-            $result = $stmt->get_result();
+            $result = $stmt->GET_result();
             $patients = [];
 
             while ($row = $result->fetch_assoc()) {
@@ -63,16 +63,18 @@ function getPatientById($conn, $patient_id) {
                 FLOOR(DATEDIFF(CURDATE(), date_of_birth) / 365.25) AS age,
                 gender,
                 admission_date,
-                `status`
+                `status`,
+                phone,
+                notes
                 FROM patients
-                WHERE patient_id = ?";
+                WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $patient_id = (int) $patient_id;
         $stmt->bind_param('i', $patient_id);
 
         if ($stmt->execute()) {
-            $result = $stmt->get_result();
+            $result = $stmt->GET_result();
             $patient = $result->fetch_assoc();
 
             if (!$patient) {
@@ -95,12 +97,13 @@ function addPatient($conn, $name, $date_of_birth, $gender, $address, $phone, $no
         throw new Exception("Fill all required fields");
     }
 
+    $date_of_birth = date('Y-m-d', strtotime($date_of_birth));
     $sql = "INSERT INTO patients(`name`, date_of_birth, gender, `address`, phone, notes, doctor_id, `status`)
-            VALUES (?, STR_TO_DATE(?, '%Y-%m-%d'), ?, ?, ?, ?, ?, ?)";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        'ssssssss',
+        'ssssssis',
         $name,
         $date_of_birth,
         $gender,
@@ -112,10 +115,11 @@ function addPatient($conn, $name, $date_of_birth, $gender, $address, $phone, $no
     );
 
     if ($stmt->execute()) {
-        echo "<script>alert('Patient added succesfully')</script>";
+        echo "success";
     } else  {
-        echo "<script>alert('Unable to add patient')</script>";
+        echo "error_add";
     }
+
     $stmt->close();
     $conn->close();
 }
@@ -132,9 +136,9 @@ function deletePatient($conn, $patient_id) {
     $stmt->bind_param('s', $patient_id);
 
     if ($stmt->execute()) {
-        echo "success";
+        return "success";
     } else  {
-        echo "error_delete";
+        return "error_delete";
     }
     $stmt->close();
     $conn->close();
@@ -216,7 +220,7 @@ function updatePatient($conn, $patient_id, $name = null, $date_of_birth = null, 
 
         // Close the statement
         $stmt->close();
-        return true;
+        return "success";
     } catch (Exception $e) {
         handleError($e);
         $stmt->close();
@@ -230,10 +234,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     switch ($type) {
         case 'addPatient':
-            sendResponse(addPatient($conn, $_GET['name'], $_GET['date_of_birth'], $_GET['gender'], $_GET['address'], $_GET['phone'], $_GET['notes'], $_GET['doctor_id'], $_GET['status']));
+            $name = $_GET['fname'] . ' ' . $_GET['mname'] . ' ' . $_GET['lname'];
+            sendResponse(addPatient($conn, $name, $_GET['dob'], $_GET['gender'], $_GET['address'], $_GET['phone'], $_GET['notes'], $_GET['doctor_id'], $_GET['status']));
             break;
         case 'updatePatient':
-            sendResponse(updatePatient($conn, $_GET['id'], $_GET['name'], $_GET['date_of_birth'], $_GET['gender'], $_GET['address'], $_GET['phone'], $_GET['notes'], $_GET['doctor_id'], $_GET['status']));
+            $name = $_GET['fname'] . '' . $_GET['mname'] . '' . $_GET['lname'];
+            sendResponse(updatePatient($conn, $_GET['id'], $name, $_GET['dob'], $_GET['gender'], $_GET['address'], $_GET['phone'], $_GET['notes'], $_GET['doctorDropdown'], $_GET['status']));
             break;
         case 'deletePatient':
             sendResponse(deletePatient($conn, $_GET['id']));

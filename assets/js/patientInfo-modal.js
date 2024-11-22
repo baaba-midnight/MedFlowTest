@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // function to fetch and display patient details
     async function getInfo() {
         try {
-            const response = await fetch(`../../functions/manage_patient/display_info.inc.php?id=${patientId}`);
+            const response = await fetch(`../../functions/patients.inc.php?type=getPatientById&id=${patientId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
@@ -63,32 +63,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    function clearTable(dataTable) {
-        dataTable.innerHTML = ''; // Clears all rows in the <tbody>
-    }
-
     // function to populate the modal with the fetched data
     function populateModal(data) {
         console.log(data);
-        // load patient vitals
-        document.getElementById('blood_pressure').textContent = data.Vitals['blood_pressure'] + ' ' + 'mmHg';
-        document.getElementById('heart_rate').textContent = data.Vitals['heart_rate'] + ' ' + 'bpm';
-        document.getElementById('temperature').textContent = data.Vitals['temperature'] + ' ' + '°C';
 
         // load patient basic info
-        document.getElementById('patientID').textContent = data.BasicInfo['patient_id'] || 'N/A';
-        document.getElementById('patientName').textContent = data.BasicInfo['full_name'] || 'N/A';
-        document.getElementById('patientAge').textContent = data.BasicInfo['age'] || 'N/A';
-        document.getElementById('patientGender').textContent = data.BasicInfo['gender'] || 'N/A';
-        document.getElementById('patientDepartment').textContent = data.BasicInfo['departments'] || 'N/A';
-        document.getElementById('statusInfo').textContent = data.BasicInfo['status'] || 'N/A';
-        document.getElementById('statusInfo').classList.add(`${data.BasicInfo['status']}`);
+        document.getElementById('patientID').textContent = data['id'] || 'N/A';
+        document.getElementById('patientName').textContent = data['name'] || 'N/A';
+        document.getElementById('patientAge').textContent = data['age'] || 'N/A';
+        document.getElementById('patientGender').textContent = data['gender'] || 'N/A'
 
-        document.getElementById('patientAdmissionDate').textContent = data.BasicInfo['admission_date'] || 'N/A';
+        let element = document.getElementById('statusInfo');
+
+        // Get the class list
+        let classList = element.classList;
+
+        // Remove all classes except the first one
+        while (classList.length > 1) {
+            classList.remove(classList[1]);
+        }
+        element.textContent = data['status'] || 'N/A';
+        element.classList.add(data['status']);
+
+        document.getElementById('statusInfo').classList.add(`${data['status']}`);
+
+        document.getElementById('patientAdmissionDate').textContent = data['admission_date'] || 'N/A';
 
         // load patient contact information
-        document.getElementById('patientContact').textContent = data.BasicInfo['contact_number'] || 'N/A';
-        document.getElementById('patientEmail').textContent = data.BasicInfo['email'] || 'N/A';
-        document.getElementById('patientAddress').textContent = data.BasicInfo['address'] || 'N/A';
+        document.getElementById('patientContact').textContent = data['phone'] || 'N/A';
+        document.getElementById('patientAddress').textContent = data['address'] || 'N/A';
+
+        // load patient notes
+        document.getElementById('patientNotes').value = data['notes'] || 'N/A';
     }
 });

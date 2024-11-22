@@ -23,6 +23,7 @@ CREATE TABLE patients (
     notes TEXT,
     doctor_id INT, 
     `status` ENUM('inpatient', 'outpatient', 'discharged'),
+    is_critical BOOLEAN,
     FOREIGN KEY (doctor_id) REFERENCES users(id) 
 );
 

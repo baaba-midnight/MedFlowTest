@@ -13,9 +13,9 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../../../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../../../assets/css/admin-tables.css">
     <link rel="stylesheet" href="../../../assets/css/edit.css">
     <link rel="stylesheet" href="../../../assets/css/modalDisplayInfo.css">
+    <link rel="stylesheet" href="../../../assets/css/admin-tables.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -165,15 +165,15 @@
     <?php 
       $modalTitle = 'Add New Patient';
       $saveButton = 'Add Patient';
-      include '../../templates/add_modal.php';
+      include '../../templates/addPatientModal.php';
     ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/fetch_patients.js"></script>
+    <script src="../../../assets/js/fetch_patients.js"></script>
     <!-- <script src="../../assets/js/edit-patient.js"></script> -->
-    <script src="../../assets/js/fetch_patient.js"></script>
-    <script src="../../assets/js/patientInfo-modal.js"></script>
-    <script src="../../assets/js/delete.js"></script>
+    <script src="../../../assets/js/fetch_patient.js"></script>
+    <script src="../../../assets/js/patientInfo-modal.js"></script>
+    <script src="../../../assets/js/delete.js"></script>
 </body>
 </html>

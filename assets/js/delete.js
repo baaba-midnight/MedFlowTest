@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirmInput.value.trim().toUpperCase() === "DELETE") {
             // send AJAX request to delete patient
             $.ajax({
-                url: '../../functions/manage_patient/delete_patient.inc.php',
+                url: '../../functions/patients.inc.php?type=deletePatient',
                 type: 'GET',
                 data: {
                     id: patientIdToDelete
