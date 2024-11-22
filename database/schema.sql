@@ -17,10 +17,12 @@ CREATE TABLE patients (
     `name` VARCHAR(255) NOT NULL,
     date_of_birth DATE NOT NULL,
     gender ENUM('male', 'female'),
+    admission_date DATE CURRENT_TIMESTAMP,
     `address` TEXT,
     phone VARCHAR(20) NOT NULL,
     notes TEXT,
     doctor_id INT, 
+    `status` ENUM('inpatient', 'outpatient', 'discharged'),
     FOREIGN KEY (doctor_id) REFERENCES users(id) 
 );
 
