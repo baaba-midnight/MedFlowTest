@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="logo-section">
-        <img src="../../assets/images/medflow_mini_logo.png" alt="MedFlow">
+        <img src="../../../assets/images/medflow_mini_logo.png" alt="MedFlow">
         <h1>MedFlow</h1>
     </div>
     
@@ -14,7 +14,7 @@
 
     <div class="user-profile">
         <div class="profile-image">
-            <img src="../../assets/images/man-1.jpg" alt="Profile" class="me-3">
+            <img src="../../../assets/images/man-1.jpg" alt="Profile" class="me-3">
         </div>
         <div class="profile-details">
             <h6>Michael Jerome</h6>

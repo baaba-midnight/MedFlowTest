@@ -17,7 +17,7 @@ CREATE TABLE patients (
     `name` VARCHAR(255) NOT NULL,
     date_of_birth DATE NOT NULL,
     gender ENUM('male', 'female'),
-    admission_date DATE CURRENT_TIMESTAMP,
+    admission_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     `address` TEXT,
     phone VARCHAR(20) NOT NULL,
     notes TEXT,
