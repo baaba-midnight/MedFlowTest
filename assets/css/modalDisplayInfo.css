@@ -1,0 +1,122 @@
+/* #displayModal {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+} */
+
+.modal-dialog {
+    max-width: 900px;
+    margin: 1.75rem auto;
+}
+
+.modal-content {
+    border-radius: 1rem;
+    border: none;
+}
+
+.card {
+    border-radius: 0.75rem;
+    border: 1px solid #eee;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.status-badge {
+    background-color: #e7f6ec;
+    color: #166534;
+    padding: 0.25rem 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+.profile-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+}
+
+.info-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    margin-bottom: 1rem;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #eee;
+    margin-bottom: 1.5rem;
+}
+
+.nav-tabs .medical {
+    border: none;
+    color: #6b7280;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+}
+
+.nav-tabs .medical.active {
+    border-bottom: 2px solid #0d6efd;
+    color: #0d6efd;
+    font-weight: 500;
+}
+
+.vitals-card {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    height: 100%;
+}
+
+.vitals-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.severity-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875;
+    font-weight: 600;
+}
+
+.severity-severe {
+    background-color: #fde8e8;
+    color: #981b1b;
+}
+
+.severity-moderate {
+    background-color: #fdf6b2;
+    color: #723b13;
+}
+
+.severity-mild {
+    background-color: #def7ec;
+    color: #046c4e;
+}
+
+.medication-active {
+    background-color: #def7ec;
+    color: #045c4e;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.medication-ended {
+    background-color: #f3f4f6;
+    color: #6b7280;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.date-cell {
+    min-width: 100px;
+    text-align: center;
+}
