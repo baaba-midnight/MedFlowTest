@@ -7,7 +7,7 @@ $(document).on('click', '.edit-btn', function() {
 
     // Send an AJAX request to fetch patient data
     $.ajax({
-        url: '../../functions/fill_modal.php?id=' + patientId,  // Replace with your actual API endpoint
+        url: '../../functions/manage_patients/fill_modal.php?id=' + patientId,  // Replace with your actual API endpoint
         method: 'GET',
         success: function(patient) {
             // Populate the modal with the fetched patient data

@@ -2,10 +2,10 @@
 // const data = await response.json();
 
 const API_ENDPOINTS = {
-    patients: '../../functions/admin-dashboard/get_modal_data.inc.php?type=patients',
-    critical: '../../functions/admin-dashboard/get_modal_data.inc.php?type=critical',
-    staff: '../../functions/admin-dashboard/get_modal_data.inc.php?type=staff',
-    appointments: '../../functions/admin-dashboard/get_modal_data.inc.php?type=appointments'
+    patients: '../../functions/admin/get_modal_data.inc.php?type=patients',
+    critical: '../../functions/admin/get_modal_data.inc.php?type=critical',
+    staff: '../../functions/admin/get_modal_data.inc.php?type=staff',
+    appointments: '../../functions/admin/get_modal_data.inc.php?type=appointments'
 };
 
 // table definitions for the different modal types
@@ -14,24 +14,18 @@ const TABLE_COLUMNS = {
       { key: 'patientId', label: 'Patient ID' },
       { key: 'name', label: 'Patient Name' },
       { key: 'admissionDate', label: 'Admission Date' },
-      { key: 'department', label: 'Department' },
       { key: 'doctor', label: 'Doctor Name'}
     ],
     critical: [
       { key: 'patientId', label: 'Patient ID' },
-      { key: 'name', label: 'Name' },
-      { key: 'condition', label: 'Condition' },
-      { key: 'status', label: 'Status' }
+      { key: 'name', label: 'Name' }
     ],
     staff: [
       { key: 'name', label: 'Name' },
-      { key: 'email', label: 'email' },
-      { key: 'role', label: 'Role' },
-      { key: 'department', label: 'Department' }
+      { key: 'role', label: 'Role' }
     ],
     appointments: [
       { key: 'date', label: 'Date' },
-      { key: 'time', label: 'Time' },
       { key: 'patient', label: 'Patient' },
       { key: 'doctor', label: 'Doctor' },
       { key: 'status', label: 'Status' }

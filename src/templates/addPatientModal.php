@@ -11,7 +11,7 @@
                 
                 <h4 class="modal-title mt-3 mb-2"><b>Add New Patient</b></h4>
                 <div id="alert-container"></div>
-                <form method="POST" id="addPatientModal" action="../functions/add_patient.inc.php">
+                <form method="POST" id="addPatientModal" action="../../functions/patient.inc.php?type=addPatient">
                     <div class="row mt-4">
                         <div class="col">
                         <label for="fname" class="form-label"><b>First Name*</b></label>
@@ -34,47 +34,43 @@
                         </div>
                         <div class="col">
                             <label for="gender" class="form-label"><b>Gender*</b></label>
-                            <select id="gender" class="form-select">
+                            <select id="gender" name="gender" class="form-select">
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
                             </select>
                         </div>
-                        <div class="col">
-                            <label for="marital" class="form-label"><b>Marital Status*</b></label>
-                            <select id="marital" class="form-select">
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Widowed">Widowed</option>
-                                <option value="Divorced">Divorced</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col">
-                            <label for="bgroup" class="form-label"><b>Blood Group*</b></label>
-                            <select id="bgroup" class="form-select">
-                                <option value="O">O</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="AB">AB</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label for="email" class="form-label"><b>Email*</b></label>
-                            <input type="email" id="email" class="form-control" placeholder="Enter email address" name="email" required>
-                        </div>
+                        
                         <div class="col">
                             <label for="phone" class="form-label"><b>Phone Number*</b></label>
                             <input type="tel" id="phone" class="form-control" placeholder="Enter phone number. E.g +123456789" name="phone" required>
                         </div>
                     </div>
 
-                    <label for="address" class="form-label mt-4"><b>Address*</b></label>
-                    <textarea class="form-control" id="address" rows="5" maxlength="500" placeholder="Enter your address" required></textarea>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <label for="doctorDropdown" class="form-label"><b>Assign Doctor*</b></label>
+                            <select id="doctorDropdown" name="doctorDropdown" class="form-select" required>
+                                <option value="">Select a Doctor</option>
+                                <!-- Doctors will be dynamically populated here -->
+                            </select>
+                        </div>
 
-                    <label for="medications" class="form-label mt-4"><b>Current Medications*</b></label>
-                    <textarea class="form-control" id="medications" rows="5" maxlength="500" placeholder="List your medications" required></textarea>
+                        <div class="col">
+                            <label for="status" class="form-label"><b>Patient Status*</b></label>
+                            <select id="status" name="status" class="form-select" required>
+                                <option value="">Select Patient Status</option>
+                                <option value="inpatient">Inpatient</option>
+                                <option value="outpatient">Outpatient</option>
+                                <option value="discharged">Discharged</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label for="address" class="form-label mt-4"><b>Address*</b></label>
+                    <textarea class="form-control" id="address" name="address" rows="5" maxlength="500" placeholder="Enter your address" required></textarea>
+
+                    <label for="notes" class="form-label mt-4"><b>Notes</b></label>
+                    <textarea class="form-control" id="notes" rows="5" name="notes" placeholder="Take Patient Notes"></textarea>
 
                 </form>
             </div>
@@ -82,8 +78,27 @@
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-custom" id="edit">Save</button>
+                <button type="submit" class="btn btn-custom" id="add" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('../../functions/get_doctors.php')
+            .then(response => response.json())
+            .then(doctors => {
+                const dropdown = document.getElementById('doctorDropdown');
+                doctors.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.id;
+                    option.textContent = `Dr. ${doctor.username}`;
+                    dropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching doctors:', error));
+
+            // Handle Form Submission in patients.inc.php
+    })
+</script>
