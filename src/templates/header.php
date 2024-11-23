@@ -22,10 +22,14 @@ $buttonContent = $buttonContent ?? '';
                     <i class="fas fa-plus"></i><?php echo $buttonContent; ?>
                 </button>
             <?php else: ?>
-                <button class="btn btn-dark">
+                <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <i class="fas fa-plus"></i><?php echo $buttonContent; ?>
                 </button>
             <?php endif; ?>
         <?php endif; ?>
+
+        <a href="#" class="btn btn-dark">
+          <i class="bi bi-box-arrow-right"></i> Log out
+        </a>
     </div>
 </div>

@@ -13,31 +13,33 @@ function calculateAge(birthDateString) {
 }
 
 // Fetch the JSON data from the PHP script
-fetch('../../functions/patients.inc.php?type=getPatients')
-.then(response => response.json())
+fetch('../../functions/patients.inc.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        type: 'getPatients'
+    })
+})
+.then(response => {
+    return response.json()
+})
 .then(data => {
     // Check if data is an array (contains patients) or if it's an error message
-    if (Array.isArray(data)) {
+    if (data.status === "success" && data.data) {
         // Populate the table with the patient data
         const tableBody = document.getElementById('patientTable').querySelector('tbody');
-        const modals = document.getElementById('modals')
-        data.forEach(patient => {
+        // const modals = document.getElementById('modals')
+        data.data.forEach(patient => {
             const row = document.createElement('tr');
-            const modal = document.createElement('div');
-
 
             row.setAttribute('data-id', patient["id"]);
-            // console.log(patient["Patient ID"]);
-            date_of_birth = toString(patient["date_of_birth"]);
-            console.log(date_of_birth)
-            age = calculateAge(date_of_birth);
-
-            console.log(age);
+            fullName = patient["first_name"] + ' ' + patient["last_name"]
             
-
             row.innerHTML = `
                 <td>${patient["id"]}</td>
-                <td>${patient['name']}</td>
+                <td>${fullName}</td>
                 <td>${patient['age'] !== null ? patient['age'] : 'N/A'}</td>
                 <td>${patient["gender"]}</td>
                 <td>${patient["admission_date"]}</td>

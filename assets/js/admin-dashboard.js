@@ -1,7 +1,12 @@
 // use ajax to get response from database
 async function initializeCharts() {
     // fetch to initialise charts
-    const response = await fetch('../../functions/admin/get_dashboard_data.inc.php');
+    const response = await fetch('../../functions/admin/get_dashboard_data.inc.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
     const data = await response.json();
     
     // update stats

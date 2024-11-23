@@ -2,7 +2,7 @@
 
 include "../includes/config.inc.php";
 
-$sql = "SELECT id, username FROM users WHERE role = 'doctor'";
+$sql = "SELECT id, CONCAT(first_name, ' ', last_name) AS fullName FROM users WHERE role = 'doctor'";
 $result = $conn->query($sql);
 
 $doctors = [];

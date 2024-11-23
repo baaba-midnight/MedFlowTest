@@ -1,258 +1,263 @@
-<?php 
+<?php
+// patients.inc.php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 include "../includes/config.inc.php";
 
+// Set headers for JSON response and CORS if needed
 header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type");
 
-function sendResponse($data, $statusCode=200) {
+function sendResponse($data, $statusCode = 200) {
     http_response_code($statusCode);
-    
-    if ($data === "success") {
-        echo $data;
-    } else {
-        echo json_encode($data);
-    }
+    echo json_encode([
+        'status' => $statusCode === 200 ? 'success' : 'error',
+        'data' => $data
+    ]);
     exit;
 }
 
-function handleError($e) {
-    sendResponse(['error' => 'Database error: ' . $e->GETMessage()], 500);
+function handleError($message, $statusCode = 500) {
+    sendResponse(['message' => $message], $statusCode);
 }
 
 function getPatients($conn) {
     try {
         $sql = "SELECT 
                 id,
-                `name`,
+                first_name,
+                middle_name,
+                last_name,
                 FLOOR(DATEDIFF(CURDATE(), date_of_birth) / 365.25) AS age,
                 gender,
                 admission_date,
                 `status`
-                FROM patients;";
+                FROM patients";
 
         $stmt = $conn->prepare($sql);
-
-        if ($stmt->execute()) {
-            $result = $stmt->GET_result();
-            $patients = [];
-
-            while ($row = $result->fetch_assoc()) {
-                $patients[] = $row;
-            }
-
-            if (empty($patients)) {
-                return "No patients found";
-            }
-
-            $stmt->close();
-            return $patients;
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to execute query");
         }
-        $conn->close();
-    } catch (Exception $e) {
-        handleError($e);
+
+        $result = $stmt->get_result();
+        $patients = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $patients[] = $row;
+        }
+
         $stmt->close();
-        $conn->close();
+        return $patients;
+    } catch (Exception $e) {
+        throw new Exception("Failed to fetch patients: " . $e->getMessage());
     }
 }
 
-function getPatientById($conn, $patient_id) {
+function getPatientById($conn, $id) {
     try {
         $sql = "SELECT 
                 id,
-                `name`,
+                first_name,
+                middle_name,
+                last_name,
+                date_of_birth,
                 FLOOR(DATEDIFF(CURDATE(), date_of_birth) / 365.25) AS age,
                 gender,
                 admission_date,
                 `status`,
                 phone,
-                notes
-                FROM patients
+                address,
+                notes,
+                doctor_id
+                FROM patients 
                 WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
-        $patient_id = (int) $patient_id;
-        $stmt->bind_param('i', $patient_id);
+        $stmt->bind_param("i", $id);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to execute query");
+        }
+
+        $result = $stmt->get_result();
+        $patient = $result->fetch_assoc();
+        
+        if (!$patient) {
+            throw new Exception("Patient not found");
+        }
+
+        $stmt->close();
+        return $patient;
+    } catch (Exception $e) {
+        throw new Exception("Failed to fetch patient: " . $e->getMessage());
+    }
+}
+
+function addPatient($conn, $data) {
+    try {
+        // Validate required fields
+        $required = ['fname', 'lname', 'dob', 'gender', 'status'];
+        foreach ($required as $field) {
+            if (empty($data[$field])) {
+                throw new Exception("Missing required field: {$field}");
+            }
+        }
+        
+        $sql = "INSERT INTO patients (
+                first_name, 
+                middle_name,
+                last_name,
+                date_of_birth, 
+                gender, 
+                address, 
+                phone, 
+                notes, 
+                doctor_id, 
+                `status`,
+                is_critical
+                admission_date
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURDATE())";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param(
+            "ssssssss",
+            trim($data['fname']),
+            trim($data['mname']),
+            trim($data['lname']),
+            $data['dob'],
+            $data['gender'],
+            trim($data['address']) ?? '',
+            trim($data['phone']) ?? '',
+            trim($data['notes']) ?? '',
+            $data['doctor_id'] ?? NULL,
+            $data['status']
+        );
+
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to add patient");
+        }
+
+        $newId = $stmt->insert_id;
+        $stmt->close();
+        
+        return ["message" => "Patient added successfully", "id" => $newId];
+    } catch (Exception $e) {
+        throw new Exception("Failed to add patient: " . $e->getMessage());
+    }
+}
+
+function updatePatient($conn, $data) {
+    try {
+        // Ensure the patient ID is provided
+        if (empty($data['id'])) {
+            throw new Exception("Patient ID is required");
+        }
+
+        if (empty($data['fname'] || empty($data['lname']))) {
+            echo "<script>alert('Enter Required Fields')</script>";
+        }
+
+        $sql = "UPDATE `patients` 
+                SET `first_name`=?,
+                    `middle_name`=?,
+                    `last_name`=?,
+                    `date_of_birth`=?,
+                    `gender`=?,
+                    `address`=?,
+                    `phone`=?,
+                    `notes`=?,
+                    `doctor_id`=?,
+                    `status`=?,
+                    `is_critical`=?
+                WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('sssssssssss', $data['fname'], $data['mname'], $data['lname'], $data['dob'], $data['gender'], $data['address'], $data['phone'], $data['notes'], $data['doctor_id'], $data['status'], $data['is_critical']);
 
         if ($stmt->execute()) {
-            $result = $stmt->GET_result();
-            $patient = $result->fetch_assoc();
-
-            if (!$patient) {
-                throw new Exception("No patient found with specified ID");
-            }
-
-            $stmt->close();
-            return $patient;
+            echo "<script>alert('Patient Updated Successfully')</script>";
         }
-        $conn->close();
-    } catch (Exception $e) {
-        handleError($e);
+
         $stmt->close();
-        $conn->close();
-    }
+        return ["message" => "Patient updated successfully"];
+    } catch (Exception $e) {
+        // Handle exceptions and return meaningful error messages
+        return ["error" => $e->getMessage()];
+    } 
 }
 
-function addPatient($conn, $name, $date_of_birth, $gender, $address, $phone, $notes, $doctor_id, $status) {
-    if (empty($name) || empty($date_of_birth) || empty($status)) {
-        throw new Exception("Fill all required fields");
-    }
-
-    $date_of_birth = date('Y-m-d', strtotime($date_of_birth));
-    $sql = "INSERT INTO patients(`name`, date_of_birth, gender, `address`, phone, notes, doctor_id, `status`)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param(
-        'ssssssis',
-        $name,
-        $date_of_birth,
-        $gender,
-        $address,
-        $phone,
-        $notes,
-        $doctor_id,
-        $status
-    );
-
-    if ($stmt->execute()) {
-        echo "success";
-    } else  {
-        echo "error_add";
-    }
-
-    $stmt->close();
-    $conn->close();
-}
-
-function deletePatient($conn, $patient_id) {
-    if (empty($patient_id)) {
-        error_log("No recieved id");
-        echo "error_fields";
-        exit;
-    }
-
-    $query = "DELETE FROM patients WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('s', $patient_id);
-
-    if ($stmt->execute()) {
-        return "success";
-    } else  {
-        return "error_delete";
-    }
-    $stmt->close();
-    $conn->close();
-}
-
-function updatePatient($conn, $patient_id, $name = null, $date_of_birth = null, $gender = null, $address = null, $phone = null, $notes=null, $doctor_id, $status=null) {
+function deletePatient($conn, $id) {
     try {
-        // Start building the SQL query
-        $sql = "UPDATE patients SET ";
-        $fields = [];
-        $params = [];
-        $types = ""; // Parameter types for binding
-
-        if (!is_null($name)) {
-            $fields[] = "name = ?";
-            $params[] = $name;
-            $types .= "s";
-        }
-
-        if (!is_null($date_of_birth)) {
-            $fields[] = "date_of_birth = ?";
-            $params[] = $date_of_birth;
-            $types .= "s";
-        }
-
-        if (!is_null($gender)) {
-            $fields[] = "gender = ?";
-            $params[] = $gender;
-            $types .= "s";
-        }
-
-        if (!is_null($address)) {
-            $fields[] = "address = ?";
-            $params[] = $address;
-            $types .= "s";
-        }
-
-        if (!is_null($phone)) {
-            $fields[] = "phone = ?";
-            $params[] = $phone;
-            $types .= "s";
-        }
-
-        if (!is_null($doctor_id)) {
-            $fields[] = "doctor_id = ?";
-            $params[] = $doctor_id;
-            $types .= "s";
-        }
-
-        if (!is_null($notes)) {
-            $fields[] = "notes = ?";
-            $params[] = $notes;
-            $types .= "s";
-        }
-
-        if (!is_null($status)) {
-            $fields[] = "status = ?";
-            $params[] = $status;
-            $types .= "s";
-        }
-
-        $sql .= implode(", ", $fields) . " WHERE id = ?";
-        $params[] = $patient_id; 
-        $types .= "i";
-
-        // Prepare the statement
+        $sql = "DELETE FROM patients WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Failed to prepare statement: " . $conn->error);
-        }
+        $stmt->bind_param("i", $id);
 
-        // Bind parameters dynamically
-        $stmt->bind_param($types, ...$params);
-
-        // Execute the statement
         if (!$stmt->execute()) {
-            throw new Exception("Failed to execute statement: " . $stmt->error);
+            throw new Exception("Failed to delete patient");
         }
 
-        // Close the statement
+        if ($stmt->affected_rows === 0) {
+            throw new Exception("Patient not found");
+        }
+
         $stmt->close();
-        return "success";
+        return ["message" => "Patient deleted successfully"];
     } catch (Exception $e) {
-        handleError($e);
-        $stmt->close();
-        $conn->close();
+        throw new Exception("Failed to delete patient: " . $e->getMessage());
     }
 }
 
-// main routing
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $type = $_GET['type'] ?? '';
+// Main request handling
+try {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception("Only POST method is allowed", 405);
+    }
 
-    switch ($type) {
-        case 'addPatient':
-            $name = $_GET['fname'] . ' ' . $_GET['mname'] . ' ' . $_GET['lname'];
-            sendResponse(addPatient($conn, $name, $_GET['dob'], $_GET['gender'], $_GET['address'], $_GET['phone'], $_GET['notes'], $_GET['doctor_id'], $_GET['status']));
-            break;
-        case 'updatePatient':
-            $name = $_GET['fname'] . '' . $_GET['mname'] . '' . $_GET['lname'];
-            sendResponse(updatePatient($conn, $_GET['id'], $name, $_GET['dob'], $_GET['gender'], $_GET['address'], $_GET['phone'], $_GET['notes'], $_GET['doctorDropdown'], $_GET['status']));
-            break;
-        case 'deletePatient':
-            sendResponse(deletePatient($conn, $_GET['id']));
-            break;
+    $input = file_get_contents("php://input");
+    $data = json_decode($input, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON data", 400);
+    }
+
+    if (empty($data['type'])) {
+        throw new Exception("Type parameter is required", 400);
+    }
+
+    switch ($data['type']) {
         case 'getPatients':
             sendResponse(getPatients($conn));
             break;
+
         case 'getPatientById':
-            sendResponse(getPatientById($conn, $_GET['id']));
+            if (empty($data['id'])) {
+                throw new Exception("Patient ID is required", 400);
+            }
+            sendResponse(getPatientById($conn, $data['id']));
             break;
+
+        case 'addPatient':
+            sendResponse(addPatient($conn, $data));
+            break;
+
+        case 'updatePatient':
+            sendResponse(updatePatient($conn, $data));
+            break;
+
+        case 'deletePatient':
+            if (empty($data['id'])) {
+                throw new Exception("Patient ID is required", 400);
+            }
+            sendResponse(deletePatient($conn, $data['id']));
+            break;
+
         default:
-            sendResponse(['error' => 'Invalid type specified'], 400);
+            throw new Exception("Invalid type specified", 400);
     }
-} else {
-    sendResponse(['error' => 'Invalid request method'], 405);
+} catch (Exception $e) {
+    handleError($e->getMessage(), $e->getCode() ?: 500);
 }

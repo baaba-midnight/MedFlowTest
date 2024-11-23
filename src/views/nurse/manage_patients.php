@@ -13,50 +13,45 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../../../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../../../assets/css/admin-tables.css">
     <link rel="stylesheet" href="../../../assets/css/edit.css">
     <link rel="stylesheet" href="../../../assets/css/modalDisplayInfo.css">
+    <link rel="stylesheet" href="../../../assets/css/admin-tables.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-    <?php include '../../templates/admin-sidebar.php'; ?>
-
     <!-- Main Content -->
-    <div class="main-content">
+    <div>
         <?php 
             $headerTitle = 'Manage Patients';
             $buttonContent = 'Add Patient';
             include '../../templates/header.php'; 
         ?>
 
-        <div class="table-container">
-            <table class="table" id="patientTable">
-                <thead>
-                    <tr>
-                        <th>Patient ID</th>
-                        <th>Patient Name</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Admission Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                  <!-- Data will be inserted here by JS -->
-                </tbody>
-            </table>
-        </div>
+        <div class="nurse">
+            <div class="table-container">
+                <table class="table" id="patientTable">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Assigned Doctor</th>
+                            <th>Status</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    <!-- Data will be inserted here by JS -->
+                    </tbody>
+                </table>
+            </div>
+        <div>
     </div>
 
     <!-- Display Patient Information Modal -->
     <?php include '../../templates/patientInfo.php' ?>
 
-    <!-- Delete Modal -->
-    <?php include "../../templates/delete.php" ?>
-
-    <!-- Patient Form Modal -->
+    <!-- Patient Edit Form Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
         	<div class="modal-content">
@@ -165,15 +160,15 @@
     <?php 
       $modalTitle = 'Add New Patient';
       $saveButton = 'Add Patient';
-      include '../../templates/add_modal.php';
+      include '../../templates/addPatientModal.php';
     ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../../assets/js/fetch_patients.js"></script>
-    <!-- <script src="../../assets/js/edit-patient.js"></script> -->
+    <script src="../../../assets/js/nurse_patients.js"></script>
     <script src="../../../assets/js/fetch_patient.js"></script>
     <script src="../../../assets/js/patientInfo-modal.js"></script>
-    <script src="../../../assets/js/delete.js"></script>
+    <script src="../../../assets/js/addPatient.js"></script>
+    <script src="../../../assets/js/generate_report.js"></script>
 </body>
 </html>

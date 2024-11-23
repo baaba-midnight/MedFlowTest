@@ -63,7 +63,7 @@
     border-radius: 12px;
     padding: 1.875rem;
     overflow-x: auto;
-    max-height: 20%;
+    max-height: 10%;
     overflow-y: auto;
     
     /* Makes scrolling smooth on all browsers */

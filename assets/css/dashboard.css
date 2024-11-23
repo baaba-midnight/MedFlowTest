@@ -101,6 +101,12 @@ body {
     padding: 20px;
 }
 
+.nurse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .dashboard-header {
     background-color: white;
     padding: 15px;
