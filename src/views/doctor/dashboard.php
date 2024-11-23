@@ -1,3 +1,6 @@
+<?php
+include "../../includes/config.inc.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +15,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../../assets/css/dashboard.css">
     <link rel="stylesheet" href="../../../assets/css/modal.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <?php include "../../templates/doctor-sidebar.php"; ?>
 
     <!-- Main Content -->
-<div class="main-content">
+<div class="main-content" id="mainData" data-id = "<?php echo $_SESSION['id']?>">
     <div class="dashboard-header">
         <h4 class="mb-0">Dashboard</h4>
     </div>
@@ -31,23 +35,23 @@
                     <div class="stat-card primary">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <div>Assigned Patients</div>
-                                <h2 id="active-patients-count" class="count">0</h2>
+                                <div>Total Assigned Patients</div>
+                                <?php
+                                //Set it to session Id
+                                $user_id = 1;
+                                $query = 'SELECT COUNT(*) AS assigned_patients FROM patients WHERE doctor_id = ?;';
+                                $stmt = $conn->prepare($query);
+                                $stmt->bind_param('i', $user_id);
+                                if ($stmt-> execute()){
+                                    $results = $stmt -> get_result();
+                                    $row = $results -> fetch_assoc();
+                                    $assigned_patients = $row["assigned_patients"];
+                                }
+                                ?>
+                                <h2 id="active-patients-count" class="count"><?php echo $assigned_patients ?></h2>
                                 <small id="assigned-patients-change"></small>
                             </div>
                             <button class="see-details align-self-start" id="assigned-patients" onclick="openModal('patients')">See Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="stat-card dark">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <div>Pending Tasks</div>
-                                <h2 id="pending-tasks-count" class="count">0</h2>
-                                <small id="pending-tasks-date"></small>
-                            </div>
-                            <button class="see-details align-self-start" onclick="openModal('tasks')">See Details</button>
                         </div>
                     </div>
                 </div>
@@ -68,7 +72,23 @@
                         <div class="d-flex justify-content-between">
                             <div>
                                 <div>New Consultations</div>
-                                <h2 id="new-consultations-count" class="count">0</h2>
+                                <?php
+                                $user_id = 1;
+                                //Set it to session Id
+                                $query = 'SELECT COUNT(*) AS new_consultations
+                                    FROM appointments
+                                    WHERE DATE(created_at) = CURDATE() AND doctor_id = ?;
+                                    ';
+                                $stmt = $conn->prepare($query);
+                                $stmt->bind_param('i', $user_id);
+                                if ($stmt-> execute()){
+                                    $results = $stmt -> get_result();
+                                    $row = $results -> fetch_assoc();
+                                    $new_consultations = $row["new_consultations"];
+                                }
+
+                                ?>
+                                <h2 id="new-consultations-count" class="count"><?php echo $new_consultations?></h2>
                                 <small id="consultations-change"></small>
                             </div>
                             <button class="see-details align-self-start" onclick="openModal('consultations')">See Details</button>
