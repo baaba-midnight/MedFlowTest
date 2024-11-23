@@ -1,181 +1,217 @@
 <?php 
-
 include "../includes/config.inc.php";
 
+// Set headers for JSON response and CORS if needed
 header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type");
 
-function sendResponse($data, $statusCode=200) {
+function sendResponse($data, $statusCode = 200) {
     http_response_code($statusCode);
-
-    if ($data === "success") {
-        echo $data;
-    } else {
-        echo json_encode($data);
-    }
+    echo json_encode([
+        'status' => $statusCode === 200 ? 'success' : 'error',
+        'data' => $data
+    ]);
     exit;
+}
+
+function handleError($message, $statusCode = 500) {
+    sendResponse(['message' => $message], $statusCode);
 }
 
 function getUsers($conn) {
     try {
-        $sql = "SELECT id, username, `role` FROM users";
-
+        $sql = "SELECT id, first_name, last_name, email, `role` FROM users";
         $stmt = $conn->prepare($sql);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to execute query");
+        }
+
+        $result = $stmt->get_result();
         $users = [];
 
-        if ($stmt->execute()) {
-            $result = $stmt->get_result();
-            $users = [];
-
-            while ($row = $result->fetch_assoc()) {
-                $users[] = $row;
-            }
-
-            if (empty($users)) {
-                return "No users found";
-            }
-
-            $stmt->close();
-            return $users;
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
         }
-        $conn->close();
-    } catch (Exception $e) {
-        handleError($e);
+
         $stmt->close();
-        $conn->close();
+        return $users;
+    } catch (Exception $e) {
+        throw new Exception("Failed to fetch users: " . $e->getMessage());
     }
 }
 
 function getUserById($conn, $userId) {
     try {
-        $userId = (int) $userId;
-        $sql = "SELECT username, `role` FROM users WHERE id = ?";
-
+        $sql = "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name, email, `role` FROM users WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $userId);
-
-        if ($stmt->execute()) {
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-
-            return $row;
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to execute query");
         }
-        $conn->close();
-    } catch (Exception $e) {
-        handleError($e);
+
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        
+        if (!$user) {
+            throw new Exception("User not found");
+        }
+
         $stmt->close();
-        $conn->close();
-    }
-}
-
-function addUser($conn, $name, $password, $role) {
-    try {
-        // hash the password securely
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-        // sql query insert a new user
-        $sql = "INSERT INTO users (username, password, role)
-            VALUES (?,?,?)";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sss', $name, $hashedPassword, $role);
-
-        return $stmt->execute();
+        return $user;
     } catch (Exception $e) {
-        error_log("Error adding user: " . $e->getMessage());
-        return false;
+        throw new Exception("Failed to fetch user: " . $e->getMessage());
     }
 }
 
-function deleteUser($conn, $userId) {
-    $sql = "DELETE FROM users WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $userId);
-
-    if ($stmt->execute()) {
-        return "success";
-    }
-}
-
-function updateUser($conn, $userId, $name = null, $password = null, $role = null) {
+function addUser($conn, $data) {
     try {
-        // Start building the SQL query
-        $sql = "UPDATE users SET ";
-        $fields = [];
+        if (empty($data['name']) || empty($data['password']) || empty($data['role'])) {
+            throw new Exception("Missing required fields");
+        }
+
+        $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
+        
+        $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('sss', $data['name'], $hashedPassword, $data['role']);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to add user");
+        }
+
+        $newId = $stmt->insert_id;
+        $stmt->close();
+        
+        return ["message" => "User added successfully", "id" => $newId];
+    } catch (Exception $e) {
+        throw new Exception("Failed to add user: " . $e->getMessage());
+    }
+}
+
+function updateUser($conn, $data) {
+    try {
+        if (empty($data['id'])) {
+            throw new Exception("User ID is required");
+        }
+
+        $updates = [];
         $params = [];
-        $types = ""; // Parameter types for binding
+        $types = "";
 
-        if (!is_null($name)) {
-            $fields[] = "username = ?";
-            $params[] = $name;
+        if (!empty($data['name'])) {
+            $updates[] = "username = ?";
+            $params[] = $data['name'];
             $types .= "s";
         }
 
-        if (!is_null($password)) {
-            $fields[] = "password = ?";
-            $params[] = password_hash($password, PASSWORD_BCRYPT);
+        if (!empty($data['password'])) {
+            $updates[] = "password = ?";
+            $params[] = password_hash($data['password'], PASSWORD_BCRYPT);
             $types .= "s";
         }
 
-        if (!is_null($role)) {
-            $fields[] = "role = ?";
-            $params[] = $role;
+        if (!empty($data['role'])) {
+            $updates[] = "role = ?";
+            $params[] = $data['role'];
             $types .= "s";
         }
 
-        // check if any of the fields are empty
-        if (empty($fields)) {
-            throw new Exception("No fields provided to update.");
+        if (empty($updates)) {
+            throw new Exception("No fields to update");
         }
 
-        $sql .= implode(", ", $fields) . " WHERE id = ?";
-        $params[] = $userId; 
+        $sql = "UPDATE users SET " . implode(", ", $updates) . " WHERE id = ?";
+        $params[] = $data['id'];
         $types .= "i";
 
-        // Prepare the statement
         $stmt = $conn->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Failed to prepare statement: " . $conn->error);
-        }
-
-        // Bind parameters dynamically
         $stmt->bind_param($types, ...$params);
 
-        // Execute the statement
         if (!$stmt->execute()) {
-            throw new Exception("Failed to execute statement: " . $stmt->error);
+            throw new Exception("Failed to update user");
         }
 
-        // Close the statement
         $stmt->close();
-        return true;
+        return ["message" => "User updated successfully"];
     } catch (Exception $e) {
-        handleError($e);
-        $stmt->close();
-        $conn->close();
+        throw new Exception("Failed to update user: " . $e->getMessage());
     }
 }
 
-// main routing
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $type = $_GET['type'] ?? '';
+function deleteUser($conn, $id) {
+    try {
+        $sql = "DELETE FROM users WHERE id = ?";
+        $stmt = $conn->prepare($sql);
 
-    switch ($type) {
-        case 'addUser':
-            sendResponse(addUser($conn, $_GET['name'], $_GET['password'], $_GET['role']));
-            break;
-        case 'updateUser':
-            sendResponse(updateUser($conn, $_GET['id'], $_GET['name'], $_GET['password'], $_GET['role']));
-            break;
-        case 'deleteUser':
-            sendResponse(deleteUser($conn, $_GET['id']));
-            break;
+        $id = (int) $id;
+        $stmt->bind_param("i", $id);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to delete user");
+        }
+
+        if ($stmt->affected_rows === 0) {
+            throw new Exception("User not found");
+        }
+
+        $stmt->close();
+        return ["message" => "User deleted successfully"];
+    } catch (Exception $e) {
+        throw new Exception("Failed to delete user: " . $e->getMessage());
+    }
+}
+
+// Main request handling
+try {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception("Only POST method is allowed", 405);
+    }
+
+    $input = file_get_contents("php://input");
+    $data = json_decode($input, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON data", 400);
+    }
+
+    if (empty($data['type'])) {
+        throw new Exception("Type parameter is required", 400);
+    }
+
+    switch ($data['type']) {
         case 'getUsers':
             sendResponse(getUsers($conn));
             break;
+
         case 'getUserById':
-            sendResponse(getUserById($conn, $_GET['id']));
+            if (empty($data['id'])) {
+                throw new Exception("User ID is required", 400);
+            }
+            sendResponse(getUserById($conn, $data['id']));
             break;
+
+        case 'addUser':
+            sendResponse(addUser($conn, $data));
+            break;
+
+        case 'updateUser':
+            sendResponse(updateUser($conn, $data));
+            break;
+
+        case 'deleteUser':
+            if (empty($data['id'])) {
+                throw new Exception("User ID is required", 400);
+            }
+            sendResponse(deleteUser($conn, $data['id']));
+            break;
+
+        default:
+            throw new Exception("Invalid type specified", 400);
     }
-} else {
-    sendResponse(['error' => 'Invalid request method'], 405);
+} catch (Exception $e) {
+    handleError($e->getMessage(), $e->getCode() ?: 500);
 }

@@ -1,7 +1,7 @@
 <div class="modal fade" id="displayModal" data-bs-backdrop="true" data-bs-keyboard="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body p-4">
+            <div class="modal-body p-4" style="font-family: 'Roboto', sans-serif;">
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="mb-0">Patient Information</h2>

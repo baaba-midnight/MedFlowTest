@@ -11,7 +11,7 @@
                 
                 <h4 class="modal-title mt-3 mb-2"><b>Add New Patient</b></h4>
                 <div id="alert-container"></div>
-                <form method="POST" id="addPatientModal" action="../../functions/patient.inc.php?type=addPatient">
+                <form id="addPatientForm">
                     <div class="row mt-4">
                         <div class="col">
                         <label for="fname" class="form-label"><b>First Name*</b></label>
@@ -72,14 +72,14 @@
                     <label for="notes" class="form-label mt-4"><b>Notes</b></label>
                     <textarea class="form-control" id="notes" rows="5" name="notes" placeholder="Take Patient Notes"></textarea>
 
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-custom" data-bs-dismiss="modal">Add Patient</button>
+                    </div>
                 </form>
             </div>
-        
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-custom" id="add" data-bs-dismiss="modal">Save</button>
-            </div>
+    
         </div>
     </div>
 </div>
@@ -93,7 +93,7 @@
                 doctors.forEach(doctor => {
                     const option = document.createElement('option');
                     option.value = doctor.id;
-                    option.textContent = `Dr. ${doctor.username}`;
+                    option.textContent = `Dr. ${doctor.fullName}`;
                     dropdown.appendChild(option);
                 });
             })

@@ -1,0 +1,36 @@
+Array
+(
+    [REQUEST] => POST
+    [INPUT] => {"type":"getPatients"}
+    [POST] => Array
+        (
+        )
+
+)
+Array
+(
+    [REQUEST] => POST
+    [INPUT] => {"type":"getPatients"}
+    [POST] => Array
+        (
+        )
+
+)
+Array
+(
+    [REQUEST] => POST
+    [INPUT] => {"type":"getPatients"}
+    [POST] => Array
+        (
+        )
+
+)
+Array
+(
+    [REQUEST] => POST
+    [INPUT] => {"type":"getPatients"}
+    [POST] => Array
+        (
+        )
+
+)

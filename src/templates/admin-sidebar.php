@@ -1,3 +1,13 @@
+<?php
+$userId = 2;
+$first_name = "Michael";
+$last_name = "Jerome";
+
+$fullName = $first_name . " " . $last_name;
+$email = "michael.jerome@medflow.com";
+$role = 'Admin';
+?>
+
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="logo-section">
@@ -16,9 +26,9 @@
             <img src="../../../assets/images/man-1.jpg" alt="Profile" class="me-3">
         </div>
         <div class="profile-details">
-            <h6>Michael Jerome</h6>
-            <p>Admin</p>
-            <a href="mailto:michael.jerome@medflow.com">michael.jerome@medflow.com</a>
+            <h6><?php echo $fullName ?></h6>
+            <p><?php echo $role ?></p>
+            <a href="mailto:<?php echo $email ?>"><?php echo $email ?></a>
         </div>
     </div>
 </div>

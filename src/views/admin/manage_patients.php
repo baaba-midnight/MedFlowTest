@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- For icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -64,7 +65,7 @@
 				<!-- Modal body -->
 				<div class="modal-body ms-3" style="font-family:'Roboto', sans-serif;">
 					<div class="d-flex align-items-center justify-content-center mb-2">
-						<img src="../../assets/images/medflow-logo.png" width="200" height="100" alt="MedFlow-logo">
+						<img src="../../../assets/images/medflow-logo.png" width="200" height="100" alt="MedFlow-logo">
 					</div>
 					
 					<h4 class="modal-title mt-3 mb-2"><b>Edit Patient Information</b></h4>
@@ -171,9 +172,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../../assets/js/fetch_patients.js"></script>
-    <!-- <script src="../../assets/js/edit-patient.js"></script> -->
+    <script src="../../assets/js/edit_patient_modal.js"></script>
     <script src="../../../assets/js/fetch_patient.js"></script>
     <script src="../../../assets/js/patientInfo-modal.js"></script>
-    <script src="../../../assets/js/delete.js"></script>
+    <script src="../../../assets/js/delete_patient.js"></script>
+    <script src="../../../assets/js/addPatient.js"></script>
 </body>
 </html>

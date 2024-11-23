@@ -1,32 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     let patientId;
-    // Tab handling
-    const medicalLinks = document.querySelectorAll('.nav-link.medical');
-    
-    medicalLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remove active class from all links and tab panes
-            medicalLinks.forEach(navLink => {
-                navLink.classList.remove('active');
-            });
-            
-            document.querySelectorAll('.tab-pane').forEach(pane => {
-                pane.classList.remove('active', 'show');
-            });
-            
-            // Add active class to clicked link
-            this.classList.add('active');
-            
-            // Get the target tab from href and activate it
-            const tabId = this.getAttribute('href');
-            const targetTab = document.querySelector(tabId);
-            if (targetTab) {
-                targetTab.classList.add('active', 'show');
-            }
-        });
-    });
 
     // Modal handling
     const displayModal = document.getElementById('displayModal');
@@ -48,7 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // function to fetch and display patient details
     async function getInfo() {
         try {
-            const response = await fetch(`../../functions/patients.inc.php?type=getPatientById&id=${patientId}`);
+            const response = await fetch(`../../functions/patients.inc.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    type: 'getPatientById',
+                    id: patientId
+                })
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
@@ -57,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // populate the modal with patient detials
             console.log(patientId);
-            populateModal(data);
+            populateModal(data.data);
         } catch (error) {
             console.error('There has been a problem with your fetch operation:', error);
         }
@@ -66,10 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // function to populate the modal with the fetched data
     function populateModal(data) {
         console.log(data);
+        fullName = data["first_name"] + ' ' + data["last_name"];
 
         // load patient basic info
         document.getElementById('patientID').textContent = data['id'] || 'N/A';
-        document.getElementById('patientName').textContent = data['name'] || 'N/A';
+        document.getElementById('patientName').textContent = fullName || 'N/A';
         document.getElementById('patientAge').textContent = data['age'] || 'N/A';
         document.getElementById('patientGender').textContent = data['gender'] || 'N/A'
 
