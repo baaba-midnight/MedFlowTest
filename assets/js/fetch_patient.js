@@ -10,19 +10,20 @@ $(document).on('click', '.edit-btn', function() {
         url: '../../functions/manage_patients/fill_modal.php?id=' + patientId,  // Replace with your actual API endpoint
         method: 'GET',
         success: function(patient) {
+            console.log(patient.gender)
+            console.log(patient.doctor_name)
             // Populate the modal with the fetched patient data
-            $('#fname').val(patient.first_name);
-            $('#mname').val(patient.middle_name);
-            $('#lname').val(patient.last_name);
+            $('#fname').val( patient.patient_first_name);
+            $('#mname').val(patient.patient_middle_name);
+            $('#lname').val(patient.patient_last_name);
             $('#dob').val(patient.date_of_birth);
             $('#gender').val(patient.gender);
-            $('#marital').val(patient.marital_status);
-            $('#bgroup').val(patient.blood_group);
-            $('#email').val(patient.email);
-            $('#phone').val(patient.contact_number);
-            $('#address').val(patient.address);
-            $('#medications').val();
+            $('#phone').val(patient.phone);
+            $('#doctorDropdown').val(patient.doctor_id);
             $('#status').val(patient.status);
+            $('#address').val(patient.address);
+            $('#notes').val(patient.notes);
+            
 
 
             // Optionally, store the patient ID in the save button for later use

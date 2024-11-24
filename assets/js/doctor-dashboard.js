@@ -56,13 +56,13 @@ $(document).ready(function () {
                             <h6 class="mb-1">${patient.patient_name}</h6>
                         </div>
                         <div class="action-icons">
-                            <a href="#"><i class="fas fa-clipboard"></i></a>
-                            <a href="#"><i class="fas fa-edit"></i></a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#confirmModal"><i class="bi bi-clipboard-check-fill fs-4"></i></a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient.id}"><i class="fas fa-edit fs-4"></i></a>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <small>${patient.age}/${patient.gender}</small>
-                        <span class="badge ${patient.patient_status === "inpatient" ? "bg-success" : "bg-danger"}">${patient.patient_status}</span>
+                        <span class="status-badge ${patient.patient_status}">${patient.patient_status}</span>
                     </div>
                     <br>
                 `;
