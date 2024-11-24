@@ -155,8 +155,7 @@
                     <h4 class="modal-title mt-3 mb-2"><b>Add New User</b></h4>
                     <div id="alert-container"></div>
 
-                    <form method="POST" action="../../functions/users.inc.php">
-                        <input type="hidden" value="addUser" name="type">
+                    <form id="addUserForm">
                         <div class="row mt-4">
                             <div class="col">
                                 <label for="fname" class="form-label"><b>First Name*</b></label>
@@ -173,14 +172,31 @@
                         </div>
 
                         <div class="row mt-4">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <label for="email" class="form-label"><b>Email*</b></label>
-                                <input type="email" id="user-email" class="form-control" placeholder="Enter last name" name="lname" required>
+                                <input type="email" id="user-email" class="form-control" placeholder="Enter last name" name="email" required>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-4">
                                 <label for="password" class="form-label"><b>Password*</b></label>
-                                <input type="password" id="user-password" class="form-control" placeholder="Enter Password" name="password" required>
+                                <input type="password" id="user-password" class="form-control" placeholder="Enter Password" name="password" required aria-describedby="passwordToggle">
+                            </div>
+
+                            <div class="col-4">
+                                <label for="confirmPassword" class="form-label"><b>Confirm Password*</b></label>
+                                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" name="confirmPassword" required aria-describedby="passwordToggle">
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-4">
+                                <label for="role" class="form-label"><b>Role*</b></label>
+                                <select id="role" name="role" class="form-select" required>
+                                    <option value="">Select User Role</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="doctor">Doctor</option>
+                                    <option value="nurse">Nurse</option>
+                                </select>
                             </div>
                         </div>
 
@@ -188,7 +204,7 @@
                         <div style="margin-top: 10px;">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                                <button class="btn btn-custom" id="add" type="submit">Add New User</button>
+                                <button class="btn btn-custom" id="add" type="submit" data-bs-dismiss="modal">Add New User</button>
                             </div>
                         </div>
                     </form>

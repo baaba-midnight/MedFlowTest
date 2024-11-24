@@ -98,6 +98,7 @@ function getPatientById($conn, $id) {
 }
 
 function addPatient($conn, $data) {
+    // echo $data['fname'];
     try {
         // Validate required fields
         $required = ['fname', 'lname', 'dob', 'gender', 'status'];
@@ -106,6 +107,15 @@ function addPatient($conn, $data) {
                 throw new Exception("Missing required field: {$field}");
             }
         }
+
+        $fname = trim($data['fname']);
+        $mname = trim($data['mname']);
+        $lname = trim($data['lname']);
+        $address = trim($data['address']) ?? '';
+        $phone = trim($data['phone']) ?? '';
+        $notes = trim($data['notes']) ?? '';
+        $doctor_id = $data['doctorDropdown'] ?? NULL;
+        $is_critical =  $data['is_critical'] == "1" ? TRUE : FALSE;
         
         $sql = "INSERT INTO patients (
                 first_name, 
@@ -118,23 +128,24 @@ function addPatient($conn, $data) {
                 notes, 
                 doctor_id, 
                 `status`,
-                is_critical
+                is_critical,
                 admission_date
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURDATE())";
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURDATE())";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssssssss",
-            trim($data['fname']),
-            trim($data['mname']),
-            trim($data['lname']),
+            "sssssssssss",
+            $fname,
+            $mname,
+            $lname,
             $data['dob'],
             $data['gender'],
-            trim($data['address']) ?? '',
-            trim($data['phone']) ?? '',
-            trim($data['notes']) ?? '',
-            $data['doctor_id'] ?? NULL,
-            $data['status']
+            $address,
+            $phone,
+            $notes,
+            $doctor_id,
+            $data['status'],
+            $is_critical
         );
 
         if (!$stmt->execute()) {
