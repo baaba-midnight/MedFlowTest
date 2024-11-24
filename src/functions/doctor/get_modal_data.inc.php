@@ -21,12 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"){
 
     // Define custom queries for each table
     $queries = [
-        'patients' => "SELECT p.id, p.name, p.admission_date FROM patients p WHERE p.doctor_id = ? ORDER BY p.admission_date DESC;",
+        'patients' => "SELECT p.id, CONCAT(p.first_name, ' ', p.middle_name, ' ', p.last_name) AS name, p.admission_date FROM patients p WHERE p.doctor_id = ? ORDER BY p.admission_date DESC;",
         'critical' => "SELECT
                     id,
-                    name
+                    CONCAT(first_name, ' ', middle_name, ' ', last_name) AS name
                 FROM patients
-                WHERE is_critical = TRUE"
+                WHERE is_critical = TRUE;"
     ];
 
     // Check if the table is in the whitelist

@@ -1,7 +1,7 @@
 <?php
 
 //db connection
-include '../includes/config.inc.php';
+include '../../includes/config.inc.php';
 
 header('Content-Type: application/json');
 error_reporting(E_ALL);
@@ -11,7 +11,29 @@ ini_set('display_errors', 1);
 if($_SERVER["REQUEST_METHOD"] == 'GET'){
     if (isset($_GET['id'])) {
         $patient_id = $_GET['id'];
-        $stmt = $conn->prepare('SELECT * FROM patients WHERE patient_id = ?');
+        $query = "SELECT 
+    patients.id AS patient_id,
+    patients.first_name AS patient_first_name,
+    patients.middle_name AS patient_middle_name,
+    patients.last_name AS patient_last_name,
+    patients.date_of_birth,
+    patients.gender,
+    patients.address,
+    patients.phone,
+    patients.notes,
+    patients.status,
+    users.id AS doctor_id
+FROM 
+    patients
+LEFT JOIN 
+    users
+ON 
+    patients.doctor_id = users.id
+WHERE 
+    patients.id = ?
+    AND users.role = 'doctor';
+        ";
+        $stmt = $conn->prepare($query);
         //bind parameters to sql statement
         $stmt->bind_param('i', $patient_id);
         //execute statement

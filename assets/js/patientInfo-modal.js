@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const button = event.relatedTarget;
         patientId = button.getAttribute('data-id');
 
-        console.log(patientId);
+        console.log(patientId + "This is it");
 
         if (patientId) {
             // fetch patient details

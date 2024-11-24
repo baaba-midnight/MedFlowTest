@@ -17,7 +17,8 @@ if($_SERVER["REQUEST_METHOD"] == 'GET'){
     $id = $_GET['id'];
     //validate form data(server side)
     $query = "SELECT 
-    p.name AS patient_name,
+    p.id,
+    CONCAT(p.first_name, ' ', p.middle_name, ' ', p.last_name) AS patient_name,
     p.date_of_birth,
     p.gender,
     p.phone,
@@ -29,6 +30,7 @@ JOIN
     patients p ON a.patient_id = p.id
 WHERE 
     a.doctor_id = ? -- Replace ? with the specific doctor's ID
+    AND a.status = 'in_progress'
 LIMIT 5;";
 
     $stmt = $conn->prepare($query);
