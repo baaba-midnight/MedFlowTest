@@ -35,8 +35,8 @@
                         <div class="col">
                             <label for="gender" class="form-label"><b>Gender*</b></label>
                             <select id="gender" name="gender" class="form-select">
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </select>
                         </div>
                         
@@ -62,6 +62,15 @@
                                 <option value="inpatient">Inpatient</option>
                                 <option value="outpatient">Outpatient</option>
                                 <option value="discharged">Discharged</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="is_critical" class="form-label"><b>Is critical?*</b></label>
+                            <select id="is_critical" name="is_critical" class="form-select" required>
+                                <option value="">Select Critical Status</option>
+                                <option value="1">True</option>
+                                <option value="0">False</option>
                             </select>
                         </div>
                     </div>

@@ -69,15 +69,19 @@ function getUserById($conn, $userId) {
 
 function addUser($conn, $data) {
     try {
-        if (empty($data['name']) || empty($data['password']) || empty($data['role'])) {
+        if (empty($data['fname']) || empty($data['password']) || empty($data['role'])) {
             throw new Exception("Missing required fields");
+        }
+
+        if (trim($data['password']) !== trim($data['confirmPassword'])) {
+            throw new Exception("Passwords do not match");
         }
 
         $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
         
-        $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO users(first_name, middle_name, last_name,email, password, role) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sss', $data['name'], $hashedPassword, $data['role']);
+        $stmt->bind_param('ssssss', $data['fname'], $data['mname'], $data['lname'], $data['email'], $hashedPassword, $data['role']);
 
         if (!$stmt->execute()) {
             throw new Exception("Failed to add user");
