@@ -56,7 +56,7 @@ $(document).ready(function () {
                             <h6 class="mb-1">${patient.patient_name}</h6>
                         </div>
                         <div class="action-icons">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#confirmModal"><i class="bi bi-clipboard-check-fill fs-4"></i></a>
+                            <a href="#" id="confirm" data-id="${patient.appointment_id}"><i class="bi bi-clipboard-check-fill fs-4"></i></a>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient.id}"><i class="fas fa-edit fs-4"></i></a>
                         </div>
                     </div>

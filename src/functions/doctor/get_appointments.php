@@ -16,7 +16,8 @@ ini_set('display_errors', 1);
 if($_SERVER["REQUEST_METHOD"] == 'GET'){
     $id = $_GET['id'];
     //validate form data(server side)
-    $query = "SELECT 
+    $query = "SELECT
+    a.id as appointment_id, 
     p.id,
     CONCAT(p.first_name, ' ', p.middle_name, ' ', p.last_name) AS patient_name,
     p.date_of_birth,

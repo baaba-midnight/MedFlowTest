@@ -115,30 +115,6 @@ include "../../includes/config.inc.php";
     </div>
 </div>
 
-<!-- Modal for complete confirmation -->
-<div class="modal" id="confirmModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm Update</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-      <p>Are you sure you want to mark this appointment as completed?</p>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-custom">Confirm</button>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 <!-- Modal to open patient information -->
 <?php include "../../templates/patientInfo.php"; ?>
