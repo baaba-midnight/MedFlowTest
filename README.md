@@ -1,4 +1,5 @@
-HEALTHSYNC SOLUTIONS 
+# HEALTHSYNC SOLUTIONS
+\n
 MEDFLOW is a hospital management system that aims to revolutionize the way hosiptals handle patient registration, doctor interactions, and communication between nurse and doctors.
 The system follows the patient's journey starting from registration at the front desk, where they are entered into the system, to their consultation with the doctor, who can view the patient's 
 information and write notes. This approach improves hospital workflow from patient registration to treatment.
