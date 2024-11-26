@@ -127,13 +127,8 @@ $role = 'admin'
                                 </div>
 
                                 <div class="col">
-                                    <label for="password" class="form-label"><b>Password*</b></label>
-                                    <input type="text" id="password" class="form-control" placeholder="Enter Password" name="password">
-                                </div>
-
-                                <div class="col">
                                     <label for="role" class="form-label"><b>Role*</b></label>
-                                    <select id="role" name="role" class="form-select">
+                                    <select id="role-options" name="role" class="form-select">
                                         <option value="">Select User Role</option>
                                         <option value="admin">Admin</option>
                                         <option value="doctor">Doctor</option>

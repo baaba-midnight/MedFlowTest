@@ -6,7 +6,7 @@
             <!-- Modal body -->
             <div class="modal-body ms-3"  style="font-family:'Roboto', sans-serif;">
                 <div class="d-flex align-items-center justify-content-center mb-2">
-                    <img src="../../assets/images/medflow-logo.png" widtth="200" height="100" alt="MedFlow-logo">
+                    <img src="../../../assets/images/medflow-logo.png" widtth="200" height="100" alt="MedFlow-logo">
                 </div>
                 
                 <h4 class="modal-title mt-3 mb-2"><b>Add New Patient</b></h4>

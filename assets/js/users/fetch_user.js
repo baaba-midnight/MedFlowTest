@@ -10,14 +10,14 @@ $(document).on('click', '.edit-btn', function() {
             url: '../../functions/admin/fill_users_modal.php?id=' + userId,  // Replace with your actual API endpoint
             method: 'GET',
             success: function(user) {
-                // console.log(patient.gender)
+                console.log(user.role);
                 // console.log(patient.doctor_name)
                 // Populate the modal with the fetched patient data
                 $('#fname').val( user.first_name);
                 $('#mname').val(user.middle_name);
                 $('#lname').val(user.last_name);
                 $('#email').val(user.email);
-                $('#password').val(user.password);
+                $('#role-options').val(user.role);
                 
                 // Show the modal
                 $('#editUserModal').modal('show');

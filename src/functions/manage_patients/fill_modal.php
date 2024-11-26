@@ -22,7 +22,8 @@ if($_SERVER["REQUEST_METHOD"] == 'GET'){
     patients.phone,
     patients.notes,
     patients.status,
-    users.id AS doctor_id
+    patients.is_critical,
+    medFlow_users.id AS doctor_id
 FROM 
     patients
 LEFT JOIN 

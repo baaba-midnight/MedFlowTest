@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == 'GET'){
     middle_name,
     last_name,
     email,
-    `password`
+    role
 FROM 
     medFlow_users
 WHERE 
