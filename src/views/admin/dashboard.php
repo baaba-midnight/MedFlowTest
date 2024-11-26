@@ -1,4 +1,4 @@
-
+<?php include "adminSession.inc.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

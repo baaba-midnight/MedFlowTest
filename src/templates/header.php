@@ -33,7 +33,7 @@ $buttonContent = $buttonContent ?? '';
             <?php endif; ?>
         <?php endif; ?>
 
-        <a href="#" class="btn btn-dark">
+        <a href="../../auth/logout.php" class="btn btn-dark">
           <i class="bi bi-box-arrow-right"></i> Log out
         </a>
     </div>

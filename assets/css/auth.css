@@ -1,0 +1,24 @@
+.auth-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.auth-links span {
+margin: 0 5px;
+}
+
+.auth-links .login-link,
+.auth-links .signup-link {
+color: #007bff;
+text-decoration: none;
+transition: color 0.3s ease;
+}
+
+.auth-links .login-link:hover,
+.auth-links .signup-link:hover {
+color: #0056b3;
+}
