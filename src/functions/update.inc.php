@@ -87,7 +87,7 @@ function updateUser($conn, $data) {
             throw new Exception("No fields to update");
         }
 
-        $sql = "UPDATE users SET " . implode(", ", $updates) . " WHERE id = ?";
+        $sql = "UPDATE medFlow_users SET " . implode(", ", $updates) . " WHERE id = ?";
         $params[] = $data['id'];
         $types .= "i";
 

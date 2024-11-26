@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         throw new Exception("User ID, first_name, and last_name are required");
     }
 
-    $sql = "UPDATE `users` SET `first_name`= ?,`middle_name`= ?,`last_name`=?,`email`=?,`password`= ?,`role`=? WHERE id=?";
+    $sql = "UPDATE `medFlow_users` SET `first_name`= ?,`middle_name`= ?,`last_name`=?,`email`=?,`password`= ?,`role`=? WHERE id=?";
     
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ssssssi', $first_name, $middle_name, $last_name, $email, $hashpassword, $role, $id);
