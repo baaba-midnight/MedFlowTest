@@ -15,7 +15,7 @@ $(document).ready(function() {
         const doctor = $('#doctorDropdown').val();
         const status = $('#status').val().trim();
         const address = $('#address').val().trim();
-        const notes = $('#notes').val().trim();
+        const is_critical = $('#is_critical').val();
 
         let isValid = true;
     
@@ -50,31 +50,30 @@ $(document).ready(function() {
             return;
         }
         
-        
-
-        if (status === '') {
-            showAlert("Status cannot be empty.");
-            isValid = false;
-            return;
-        } 
-        
-
         if (phone === '') {
             showAlert("Enter a phone number");
             isValid = false;
             return;
         }
 
-        // if (!validatePhone(phone)) {
-        //     $('#alert-container').append(`
-        //         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        //         Please enter a valid phone number. Begin with an the country code.
-        //         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        //         </div>
-        //     `);
-        //     isValid = false;
-        //     return;
-        // }
+        if (!validatePhone(phone)) {
+            showAlert("Please enter a valid phone number. Begin with an the country code.");
+            isValid = false;
+            return;
+        }
+
+        if (status === '') {
+            showAlert("Status cannot be empty.");
+            isValid = false;
+            return;
+        } 
+
+        if (is_critical === '') {
+            showAlert("Is patient critical or not?");
+            isValid = false;
+            return;
+        }
+        
 
         if (address === '') {
             showAlert("Enter an address");

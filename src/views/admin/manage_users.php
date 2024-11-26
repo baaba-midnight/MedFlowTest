@@ -133,7 +133,7 @@ $role = 'admin'
 
                                 <div class="col">
                                     <label for="role" class="form-label"><b>Role*</b></label>
-                                    <select id="role" name="role" class="form-select" required>
+                                    <select id="role" name="role" class="form-select">
                                         <option value="">Select User Role</option>
                                         <option value="admin">Admin</option>
                                         <option value="doctor">Doctor</option>

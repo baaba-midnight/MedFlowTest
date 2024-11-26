@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $dob = $_POST['dob'];
     $gender = $_POST['gender'];
     $phone = $_POST['phone'];
-    $doctorId = $_POST['doctorDropdown'];
+    $doctorId = $_POST['doctorDropdown']?? '';
     $status = $_POST['status'];
     $address = $_POST['address'];
     $notes =  $_POST['notes'];
@@ -20,10 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         throw new Exception("User ID, first_name, and last_name are required");
     }
 
+    if ($doctorId == ""){
+        $doctorId = NULL;
+    }
+
     $sql = "UPDATE `patients` SET `first_name`= ?,`middle_name`= ?,`last_name`= ?,`date_of_birth`= ?,`gender`= ?, `address`= ?,`phone`= ?,`notes`= ?,`doctor_id`= ?,`status`= ?,`is_critical`= ? WHERE id=?";
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sssssssssssi', $first_name, $middle_name, $last_name, $dob, $gender, $address, $phone, $notes, $doctorId, $status, $isCrtical, $id);
+    $stmt->bind_param('ssssssssissi', $first_name, $middle_name, $last_name, $dob, $gender, $address, $phone, $notes, $doctorId, $status, $isCrtical, $id);
 
     if (!$stmt->execute()) {
         throw new Exception("Failed to update patient");

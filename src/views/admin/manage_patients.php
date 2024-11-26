@@ -113,7 +113,7 @@ $role = 'admin'
                         <div class="row mt-4">
                             <div class="col">
                                 <label for="doctorDropdown" class="form-label"><b>Assign Doctor*</b></label>
-                                <select id="doctorDropdown" name="doctorDropdown" class="form-select" disabled>
+                                <select id="doctorDropdown" name="doctorDropdown" class="form-select">
                                     <option value="">Select a Doctor</option>
                                     <!-- Doctors will be dynamically populated here -->
                                 </select>
@@ -173,6 +173,6 @@ $role = 'admin'
     <script src="../../../assets/js/patientInfo-modal.js"></script>
     <script src="../../../assets/js/delete_patient.js"></script>
     <script src="../../../assets/js/addPatient.js"></script>
-    <script src="../../../assets/js/updatePatient.js"></script>
+    <!-- <script src="../../../assets/js/updatePatient.js"></script> -->
 </body>
 </html>
