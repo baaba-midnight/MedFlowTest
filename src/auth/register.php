@@ -24,9 +24,12 @@
         <div class="form-container">
             <div class="logo-home">
                 <a href="/index.php" >
-                    <div class="logo">
-                        <img src="../../assets/images/medflow-logo.png" widtth="300" height="200" alt="MedFlow-logo">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="logo ms-5" >
+                            <img class="ms-5" src="../../assets/images/medflow-logo.png" widtth="300" height="200" alt="MedFlow-logo">
+                        </div>
                     </div>
+                    
                 </a>
             </div>
 
@@ -40,58 +43,24 @@
                     <h6>Personal Information</h6>
                     <div class="form-box">
                         <label>First Name *</label>
-                        <input type="text" placeholder="Enter first name" name="fname" id="fname" required>
+                        <input type="text" placeholder="Enter first name" name="fname" id="fname" >
 
                         <label>Middle Name *</label>
-                        <input type="text" placeholder="Enter middle name" name="mname" id="mname" required>
+                        <input type="text" placeholder="Enter middle name" name="mname" id="mname" >
 
                         <label>Last Name *</label>
-                        <input type="text" placeholder="Enter last name" name="lname" id="lname" required>
+                        <input type="text" placeholder="Enter last name" name="lname" id="lname">
 
+                        
                         <label>Date of Birth *</label>
-                        <input type="date" placeholder="mm/dd/yyyy" name="dob" id="dob" required>
-
-                        <label>Gender *</label>
-                        <select name="gender-options" id="gender-options" class="form-select" required>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
+                        <input type="date" placeholder="mm/dd/yyyy" name="dob" id="dob" >
                     </div>
                 </div>
 
                 <!-- Contact Information -->
                 <div>
-                    <h6>Contact Information</h6>
                     <div class="form-box">
-                        <label>Email Address *</label>
-                        <input type="text" placeholder="Enter email address" name="email" id="email" required>
-
-                        <label>Phone Number *</label>
-                        <input type="text" placeholder="Enter phone number" name="phone" id="phone" required>
-
-                        <label>Address *</label>
-                        <textarea placeholder="Enter your address" name="address" id="address" required></textarea>
-
-                        <label>Role *</label>
-                        <select name="role-options" id="role-options" class="form-select">
-                            <option value="Doctor">Doctor</option>
-                            <option value="Nurse">Nurse</option>
-                        </select>
-
-                        <label>Department *</label>
-                        <select name="department-options" id="department-options" class="form-select">
-                            <option value="ED/A&E">Emergency department</option>
-                            <option value="OPD">Outpatient Department</option>
-                            <option value="Internal Medicine">Internal Medicine</option>
-                            <option value="Surgery">Surgery Department</option>
-                            <option value="Pediatrics">Pediatrics</option>
-                            <option value="Obstetrics and Gynecology">Obstetrics and Gynecology</option>
-                            <option value="Pharmacy">Pharmacy</option>
-                            <option value="Diagnostic Services">Diagnostic Services</option>
-                        </select>
-
-                        <label>License Number *</label>
-                        <input type="text" id="license-number" name = "license_number" placeholder="Enter professional license number" required>
+                        
                     </div>
                 </div>
 
@@ -99,23 +68,20 @@
                 <div>
                     <h6>Account Information</h6>
                     <div class="form-box">
+                        <label>Email Address *</label>
+                        <input type="text" placeholder="Enter email address" name="email" id="email">
+
+                        <label>Role *</label>
+                        <select name="role-options" id="role-options" class="form-select">
+                            <option value="Doctor">Doctor</option>
+                            <option value="Nurse">Nurse</option>
+                        </select>
+
                         <label>Password *</label>
-                        <input placeholder="Enter password" type="password" name="password" id="password" required>
+                        <input placeholder="Enter password" type="password" name="password" id="password">
 
                         <label>Confirm Password *</label>
-                        <input placeholder="Confirm Password" type="password" name = "password2" id="password2" required>    
-                    </div>
-                </div>
-
-                <!-- Emergency Contact -->
-                <div>
-                    <h6>Emergency Contact</h6>
-                    <div class="form-box">
-                        <label>Emergency Contact Name</label>
-                        <input placeholder="Enter emergency contact name" name = "emergency_name" id="emergency_name" type="text">
-
-                        <label>Emergency Contact Phone</label> 
-                        <input placeholder="Enter emergency contact number" name = "emergency_phone" id="emergency_phone">
+                        <input placeholder="Confirm Password" type="password" name = "password2" id="password2">    
                     </div>
                 </div>
             
@@ -124,6 +90,6 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./assets/js/register.js"></script>
+    <script src="../../assets/js/register.js"></script>
 </body>
 </html>

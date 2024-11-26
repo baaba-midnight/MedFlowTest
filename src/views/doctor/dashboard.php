@@ -87,7 +87,8 @@ $role = "doctor";
 
                 <!-- Current Patients -->
                 <div class="current-patients">
-                    <h5 class="mb-4">Current Patients</h5>
+                    <div id="alert-container"></div>
+                <h5 class="mb-4">Current Patients</h5>
                     <div class="patient-list">
                         <div class="mb-4" id="patientList"></div>
                     </div>

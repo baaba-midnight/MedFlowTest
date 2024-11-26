@@ -10,31 +10,21 @@ ini_set('display_errors', 1);
 //Check for form data
 if($_SERVER["REQUEST_METHOD"] == 'GET'){
     if (isset($_GET['id'])) {
-        $patient_id = $_GET['id'];
+        $user_id = $_GET['id'];
         $query = "SELECT 
-    patients.id AS patient_id,
-    patients.first_name AS patient_first_name,
-    patients.middle_name AS patient_middle_name,
-    patients.last_name AS patient_last_name,
-    patients.date_of_birth,
-    patients.gender,
-    patients.address,
-    patients.phone,
-    patients.notes,
-    patients.status,
-    users.id AS doctor_id
+    first_name,
+    middle_name,
+    last_name,
+    email,
+    `password`
 FROM 
-    patients
-LEFT JOIN 
     users
-ON 
-    patients.doctor_id = users.id
 WHERE 
-    patients.id = ?";
-    
+    id = ?;
+        ";
         $stmt = $conn->prepare($query);
         //bind parameters to sql statement
-        $stmt->bind_param('i', $patient_id);
+        $stmt->bind_param('i', $user_id);
         //execute statement
         
 

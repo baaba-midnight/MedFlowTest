@@ -66,29 +66,30 @@ $role = 'admin'
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
     
-                <!-- Modal body -->
-                <div class="modal-body ms-3"  style="font-family:'Roboto', sans-serif;">
-                    <div class="d-flex align-items-center justify-content-center mb-2">
-                        <img src="../../../assets/images/medflow-logo.png" widtth="200" height="100" alt="MedFlow-logo">
-                    </div>
-                    
-                    <h4 class="modal-title mt-3 mb-2"><b>Edit Patient</b></h4>
-                    <div id="alert-container"></div>
-                    <form id="editPatientForm">
-                        <div class="row mt-4">
-                            <div class="col">
-                            <label for="fname" class="form-label"><b>First Name*</b></label>
-                            <input type="text" id="fname" class="form-control" placeholder="Enter first name" name="fname" required>
-                            </div>
-                            <div class="col">
-                            <label for="mname" class="form-label"><b>Middle Name</b></label>
-                            <input type="text" id="mname" class="form-control" placeholder="Enter middle name" name="mname">
-                            </div>
-                            <div class="col">
-                            <label for="lname" class="form-label"><b>Last Name*</b></label>
-                            <input type="text" id="lname" class="form-control" placeholder="Enter last name" name="lname" required>
-                            </div>
+            <!-- Modal body -->
+            <div class="modal-body ms-3"  style="font-family:'Roboto', sans-serif;">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                    <img src="../../../assets/images/medflow-logo.png" widtth="200" height="100" alt="MedFlow-logo">
+                </div>
+                
+                <h4 class="modal-title mt-3 mb-2"><b>Edit Patient</b></h4>
+                <div id="alert-container"></div>
+                <form method="POST" id="myForm" action="../../functions/updatePatient.inc.php">
+                    <input type="hidden" type="text" value="1" name="id">
+                    <div class="row mt-4">
+                        <div class="col">
+                        <label for="fname" class="form-label"><b>First Name*</b></label>
+                        <input type="text" id="fname" class="form-control" placeholder="Enter first name" name="fname" required>
                         </div>
+                        <div class="col">
+                        <label for="mname" class="form-label"><b>Middle Name</b></label>
+                        <input type="text" id="mname" class="form-control" placeholder="Enter middle name" name="mname">
+                        </div>
+                        <div class="col">
+                        <label for="lname" class="form-label"><b>Last Name*</b></label>
+                        <input type="text" id="lname" class="form-control" placeholder="Enter last name" name="lname" required>
+                        </div>
+                    </div>
 
                         <div class="row mt-4">
                             <div class="col">
@@ -118,16 +119,25 @@ $role = 'admin'
                                 </select>
                             </div>
 
-                            <div class="col">
-                                <label for="status" class="form-label"><b>Patient Status*</b></label>
-                                <select id="status" name="status" class="form-select" required>
-                                    <option value="">Select Patient Status</option>
-                                    <option value="inpatient">Inpatient</option>
-                                    <option value="outpatient">Outpatient</option>
-                                    <option value="discharged">Discharged</option>
-                                </select>
-                            </div>
+                        <div class="col">
+                            <label for="status" class="form-label"><b>Patient Status*</b></label>
+                            <select id="status" name="status" class="form-select" required>
+                                <option value="">Select Patient Status</option>
+                                <option value="inpatient">Inpatient</option>
+                                <option value="outpatient">Outpatient</option>
+                                <option value="discharged">Discharged</option>
+                            </select>
                         </div>
+
+                        <div class="col">
+                            <label for="is_critical" class="form-label"><b>Is Critical?*</b></label>
+                            <select id="is_critical" name="is_critical" class="form-select" required>
+                                <option value="">Select Critical Status</option>
+                                <option value="TRUE">TRUE</option>
+                                <option value="FALSE">FALSE</option>
+                            </select>
+                        </div>
+                    </div>
 
                         <label for="address" class="form-label mt-4"><b>Address*</b></label>
                         <textarea class="form-control" id="address" name="address" rows="5" maxlength="500" placeholder="Enter your address" required></textarea>
@@ -135,16 +145,17 @@ $role = 'admin'
                         <label for="notes" class="form-label mt-4"><b>Notes</b></label>
                         <textarea class="form-control" id="notes" rows="5" name="notes" placeholder="Take Patient Notes"></textarea>
 
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-custom" id="edit">Add Patient</button>
-                        </div>
-                    </form>
-                </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-custom" id="edit">Edit Patient</button>
+                    </div>
+                </form>
             </div>
+    
         </div>
     </div>
+</div>
 
 
 	<!-- Add Modal Inclusion -->
