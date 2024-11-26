@@ -18,7 +18,7 @@ In the project folder, locate the config.php file and edit the connection detail
 After this, you should be able to view the app in your browser using http://localhost/MedFlowTest/
 
 ## TO RUN THE DEPLOYED PROJECT
-  You can access the project using the link:[PLACEHOLDER]
+  You can access the project using the link: http://169.239.251.102:3341/~baaba.amosah/MedFlowTest/
 
 ## FIle structure 
 /MedFlowTest
