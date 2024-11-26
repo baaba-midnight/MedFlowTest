@@ -11,7 +11,7 @@ $(document).on('click', '.edit-btn', function() {
         method: 'GET',
         success: function(patient) {
             console.log(patient.gender)
-            console.log(patient.doctor_name)
+            console.log(patient.doctor_id)
             // Populate the modal with the fetched patient data
             $('#fname').val( patient.patient_first_name);
             $('#mname').val(patient.patient_middle_name);
@@ -23,6 +23,7 @@ $(document).on('click', '.edit-btn', function() {
             $('#status').val(patient.status);
             $('#address').val(patient.address);
             $('#notes').val(patient.notes);
+            $('#is_critical').val(patient.is_critical);
             
 
 

@@ -6,8 +6,8 @@ CREATE TABLE medFlow_users (
     middle_name VARCHAR(50),
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    `role` ENUM('admin', 'doctor', 'nurse') NOT NULL
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'doctor', 'nurse') NOT NULL
 );
 
 -- Create the patients table
@@ -19,11 +19,11 @@ CREATE TABLE patients (
     date_of_birth DATE NOT NULL,
     gender ENUM('male', 'female'),
     admission_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `address` TEXT,
+    address TEXT,
     phone VARCHAR(20) NOT NULL,
     notes TEXT,
     doctor_id INT, 
-    `status` ENUM('inpatient', 'outpatient', 'discharged'),
+    status ENUM('inpatient', 'outpatient', 'discharged'),
     is_critical BOOLEAN,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (doctor_id) REFERENCES medFlow_users(id) ON DELETE SET NULL
@@ -35,7 +35,7 @@ CREATE TABLE appointments (
     patient_id INT,
     doctor_id INT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `status` ENUM('in_progress', 'completed'),
+    status ENUM('in_progress', 'completed'),
     FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE,
     FOREIGN KEY (doctor_id) REFERENCES medFlow_users(id) ON DELETE CASCADE
 );

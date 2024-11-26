@@ -131,8 +131,8 @@
                             <label for="is_critical" class="form-label"><b>Is Critical?*</b></label>
                             <select id="is_critical" name="is_critical" class="form-select" required>
                                 <option value="">Select Critical Status</option>
-                                <option value="TRUE">TRUE</option>
-                                <option value="FALSE">FALSE</option>
+                                <option value="1">TRUE</option>
+                                <option value="0">FALSE</option>
                             </select>
                         </div>
                     </div>
