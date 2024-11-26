@@ -11,7 +11,8 @@
                 
                 <h4 class="modal-title mt-3 mb-2"><b>Add New Patient</b></h4>
                 <div id="alert-container"></div>
-                <form id="addPatientForm">
+                <form method="POST" action="../../functions/addPatients.inc.php">
+                    <input type="hidden" name="role" value="<?php echo htmlspecialchars($role); ?>">
                     <div class="row mt-4">
                         <div class="col">
                         <label for="fname" class="form-label"><b>First Name*</b></label>
@@ -35,8 +36,8 @@
                         <div class="col">
                             <label for="gender" class="form-label"><b>Gender*</b></label>
                             <select id="gender" name="gender" class="form-select">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
                             </select>
                         </div>
                         

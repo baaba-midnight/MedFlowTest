@@ -170,7 +170,6 @@
     <script src="../../../assets/js/fetch_patient.js"></script>
     <script src="../../../assets/js/patientInfo-modal.js"></script>
     <script src="../../../assets/js/delete_patient.js"></script>
-    <script src="../../../assets/js/addPatient.js"></script>
-    <!-- <script src="../../../assets/js/updatePatient.js"></script> -->
+    <script src="../../../assets/js/reload_functions.js"></script>
 </body>
 </html>

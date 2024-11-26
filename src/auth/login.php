@@ -3,6 +3,13 @@ include '../includes/config.inc.php';
 
 session_start();
 
+// Check if the user is already logged in
+if (isset($_SESSION['id'])) {
+    // Redirect to the previous page or a designated page
+    header("Location: " . ($_SESSION['previous_page'] ?? 'dashboard.php'));
+    exit;
+}
+
 if($_SERVER["REQUEST_METHOD"] == 'POST'){
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
@@ -31,6 +38,7 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
             // set session variables
             $_SESSION['id'] = $user_id;
             $_SESSION['role'] = $user_role;
+            $_SESSION['last_name'] = $lastName;
             $_SESSION['full_name'] = $firstName . " " . $lastName;
             $_SESSION['email'] = $email;
 
@@ -53,6 +61,9 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
     $stmt -> close();
 }
 $conn -> close();
+
+// Store the current page as the previous page for redirection
+$_SESSION['previous_page'] = $_SERVER['HTTP_REFERER'] ?? '../index.php';
 ?>
 <html lang="en">
 <head>

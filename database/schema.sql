@@ -1,7 +1,3 @@
--- Drop the database if it exists, then create a new one
-DROP DATABASE IF EXISTS hospital_management;
-CREATE DATABASE hospital_management;
-USE hospital_management;
 
 -- Create the users table
 CREATE TABLE medFlow_users (
@@ -30,7 +26,7 @@ CREATE TABLE patients (
     `status` ENUM('inpatient', 'outpatient', 'discharged'),
     is_critical BOOLEAN,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (doctor_id) REFERENCES users(id)
+    FOREIGN KEY (doctor_id) REFERENCES medFlow_users(id) ON DELETE SET NULL
 );
 
 -- Create the appointments table
@@ -41,5 +37,5 @@ CREATE TABLE appointments (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     `status` ENUM('in_progress', 'completed'),
     FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE,
-    FOREIGN KEY (doctor_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (doctor_id) REFERENCES medFlow_users(id) ON DELETE CASCADE
 );

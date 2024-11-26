@@ -60,21 +60,22 @@ function getPatients($conn) {
 function getPatientById($conn, $id) {
     try {
         $sql = "SELECT 
-                id,
-                first_name,
-                middle_name,
-                last_name,
-                date_of_birth,
-                FLOOR(DATEDIFF(CURDATE(), date_of_birth) / 365.25) AS age,
-                gender,
-                admission_date,
-                `status`,
-                phone,
-                address,
-                notes,
-                doctor_id
-                FROM patients 
-                WHERE id = ?";
+                p.id,
+                p.first_name,
+                p.middle_name,
+                p.last_name,
+                p.date_of_birth,
+                FLOOR(DATEDIFF(CURDATE(), p.date_of_birth) / 365.25) AS age,
+                p.gender,
+                p.admission_date,
+                p.`status`,
+                p.phone,
+                p.address,
+                p.notes,
+                p.doctor_id
+                FROM patients p
+                LEFT JOIN medFlow_users u ON p.id = u.id
+                WHERE p.id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -114,8 +115,10 @@ function addPatient($conn, $data) {
         $address = trim($data['address']) ?? '';
         $phone = trim($data['phone']) ?? '';
         $notes = trim($data['notes']) ?? '';
-        $doctor_id = $data['doctorDropdown'] ?? NULL;
+        $doctor_id = isset($data['doctorDropdownADD']) && $data['doctorDropdownADD'] !== "" ? $data['doctorDropdownADD'] : NULL;
         $is_critical =  $data['is_critical'] == "1" ? TRUE : FALSE;
+
+        echo json_encode($doctor_id);
         
         $sql = "INSERT INTO patients (
                 first_name, 
@@ -128,11 +131,15 @@ function addPatient($conn, $data) {
                 notes, 
                 doctor_id, 
                 `status`,
-                is_critical,
-                admission_date
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURDATE())";
+                is_critical
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
+
+        if ($stmt->errno) {
+            echo "Binding parameters failed: " . $stmt->error;
+        }
+
         $stmt->bind_param(
             "sssssssssss",
             $fname,

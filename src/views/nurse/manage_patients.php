@@ -19,6 +19,7 @@ if (!isset($_SESSION['id'])) {
     $username = $_SESSION['full_name'];
     $email = $_SESSION['email'];
     $role = $_SESSION['role'];
+    $lastName = $_SESSION['last_name'];
 }
 ?>
 
@@ -208,10 +209,10 @@ if (!isset($_SESSION['id'])) {
             <script src="../../../assets/js/nurse_patients.js"></script>
             <script src="../../../assets/js/fetch_patient.js"></script>
             <script src="../../../assets/js/patientInfo-modal.js"></script>
-            <script src="../../../assets/js/addPatient.js"></script>
+            <script src="../../../assets/js/reload_functions.js"></script>
             <script src="../../../assets/js/generate_report.js"></script>
             <script src="../../../assets/js/add_appointment.js"></script>
-            <script src="../../../assets/js/updatePatient.js"></script>
+            <!-- <script src="../../../assets/js/updatePatient.js"></script> -->
 </body>
 
 </html>
