@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     p.status,
                     p.updated_at
                 FROM patients p
-                LEFT JOIN users u ON p.doctor_id = u.id";
+                LEFT JOIN medFlow_users u ON p.doctor_id = u.id";
 
         $stmt= $conn->prepare($sql);
         

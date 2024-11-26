@@ -22,7 +22,7 @@ function handleError($message, $statusCode = 500) {
 
 function getUsers($conn) {
     try {
-        $sql = "SELECT id, first_name, last_name, email, `role` FROM users";
+        $sql = "SELECT id, first_name, last_name, email, `role` FROM medFlow_users";
         $stmt = $conn->prepare($sql);
         
         if (!$stmt->execute()) {
@@ -45,7 +45,7 @@ function getUsers($conn) {
 
 function getUserById($conn, $userId) {
     try {
-        $sql = "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name, email, `role` FROM users WHERE id = ?";
+        $sql = "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name, email, `role` FROM medFlow_users WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $userId);
         
@@ -79,7 +79,7 @@ function addUser($conn, $data) {
 
         $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
         
-        $sql = "INSERT INTO users(first_name, middle_name, last_name,email, password, role) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO medFlow_users(first_name, middle_name, last_name,email, password, role) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('ssssss', $data['fname'], $data['mname'], $data['lname'], $data['email'], $hashedPassword, $data['role']);
 
@@ -98,7 +98,7 @@ function addUser($conn, $data) {
 
 function deleteUser($conn, $id) {
     try {
-        $sql = "DELETE FROM users WHERE id = ?";
+        $sql = "DELETE FROM medFlow_users WHERE id = ?";
         $stmt = $conn->prepare($sql);
 
         $id = (int) $id;
