@@ -39,40 +39,44 @@ function generateTable(columns, data) {
 }
 
 $(document).ready(function () {
-    const id = 2;
-    const url = '../../functions/doctor/get_appointments.php?id=' + id ;
-    const obj = $("#patientList");
-    $.ajax({
-        url: url, // Your PHP script
-        type: 'GET', // PHP often handles DELETE requests as POST for simplicity
-        dataType: 'json', // Expecting JSON response
-    success: function (data) {
-        console.log(data);
-        obj.empty();
-        data.forEach(function(patient){
-            const row = `
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <h6 class="mb-1">${patient.patient_name}</h6>
+    function displayAppointments() {
+        const id = 2;
+        const url = '../../functions/doctor/get_appointments.php?id=' + id ;
+        const obj = $("#patientList");
+        $.ajax({
+            url: url, // Your PHP script
+            type: 'GET', // PHP often handles DELETE requests as POST for simplicity
+            dataType: 'json', // Expecting JSON response
+        success: function (data) {
+            console.log(data);
+            obj.empty();
+            data.forEach(function(patient){
+                const row = `
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h6 class="mb-1">${patient.patient_name}</h6>
+                            </div>
+                            <div class="action-icons">
+                                <a href="#" id="confirm" data-id="${patient.appointment_id}"><i class="bi bi-clipboard-check-fill fs-4"></i></a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient.id}"><i class="fas fa-edit fs-4"></i></a>
+                            </div>
                         </div>
-                        <div class="action-icons">
-                            <a href="#" id="confirm" data-id="${patient.appointment_id}"><i class="bi bi-clipboard-check-fill fs-4"></i></a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient.id}"><i class="fas fa-edit fs-4"></i></a>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small>${patient.age}/${patient.gender}</small>
+                            <span class="status-badge ${patient.patient_status}">${patient.patient_status}</span>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <small>${patient.age}/${patient.gender}</small>
-                        <span class="status-badge ${patient.patient_status}">${patient.patient_status}</span>
-                    </div>
-                    <br>
-                `;
-            obj.append(row);
+                        <br>
+                    `;
+                obj.append(row);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching data:', error);
+        }
         });
-    },
-    error: function (xhr, status, error) {
-        console.error('Error fetching data:', error);
     }
-    });
+    displayAppointments();
+    
 
 
     // URL for JSON data (replace with your actual endpoint)
@@ -80,7 +84,7 @@ $(document).ready(function () {
         const title = $(this).data("title");
         const type = $(this).data("table");
         console.log(type)
-        // const id = 2;
+        const id = 2;
         const url = '../../functions/doctor/get_modal_data.inc.php?table=' + type + "&&id=" + id;
         // Perform actions on button click
         console.log('Button was clicked!');
@@ -110,7 +114,69 @@ $(document).ready(function () {
             .removeClass('opacity-100 pointer-events-auto')
             .addClass('opacity-0 pointer-events-none');
     });
-
-
     // AJAX request to fetch data
+});
+
+$(document).on('click', '#confirm', function() {
+
+    function displayAppointments() {
+        const id = 2;
+        const url = '../../functions/doctor/get_appointments.php?id=' + id ;
+        const obj = $("#patientList");
+        $.ajax({
+            url: url, // Your PHP script
+            type: 'GET', // PHP often handles DELETE requests as POST for simplicity
+            dataType: 'json', // Expecting JSON response
+        success: function (data) {
+            console.log(data);
+            obj.empty();
+            data.forEach(function(patient){
+                const row = `
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h6 class="mb-1">${patient.patient_name}</h6>
+                            </div>
+                            <div class="action-icons">
+                                <a href="#" id="confirm" data-id="${patient.appointment_id}"><i class="bi bi-clipboard-check-fill fs-4"></i></a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient.id}"><i class="fas fa-edit fs-4"></i></a>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small>${patient.age}/${patient.gender}</small>
+                            <span class="status-badge ${patient.patient_status}">${patient.patient_status}</span>
+                        </div>
+                        <br>
+                    `;
+                obj.append(row);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching data:', error);
+        }
+        });
+    }
+
+    console.log("Button clicked");
+    // const id = $(this).data("id");
+    $.ajax({
+        url: '../../functions/doctor/confirm.php',
+        type: 'PUT', // Specify PUT method
+        contentType: 'application/json', // Send JSON data
+        data: JSON.stringify({
+            id: 2
+        }),
+        success: function (response) {
+            $('#alert-container').append(`
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Successfully Completed Appointment 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `);
+            displayAppointments();
+
+        },
+        error: function (xhr) {
+            console.error('Update Failed:', xhr.responseJSON.error);
+        }
+    });
 });

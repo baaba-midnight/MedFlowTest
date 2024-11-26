@@ -1,21 +1,16 @@
 $(document).ready(function() {
     $('#myForm').on('submit', function(event) {
-        console.log("Form submitting")
         event.preventDefault(); // Prevent the default form submission
+        
         $('#alert-container').empty(); // Clear previous alerts
     
         // Get form values
         const fname = $('#fname').val().trim();
-        console.log(fname)
+        console.log(fname);
         const mname = $('#mname').val().trim();
         const lname = $('#lname').val().trim();
-        const dob = $('#dob').val().trim();
-        const gender = $('#gender').val().trim(); 
-        const phone = $('#phone').val().trim();
-        const doctor = $('#doctorDropdown').val();
-        const status = $('#status').val().trim();
-        const address = $('#address').val().trim();
-        const notes = $('#notes').val().trim();
+        const email = $('#email').val().trim();
+        const password = $('#password').val().trim();
 
         let isValid = true;
     
@@ -26,67 +21,43 @@ $(document).ready(function() {
             return;
         }
 
+        if (mname === '') {
+            showAlert("Middle name cannot be empty.");
+            isValid = false;
+            return;
+        }
+
         if (lname === '') {
             showAlert("Last name cannot be empty.");
             isValid = false;
             return;
         }
 
-        if (dob === '') {
-            showAlert("Pick Patient's date of birth.");
+
+        if (email === '') {
+            showAlert("Enter an email.");
             isValid = false;
             return;
         }
 
-        if (!validateDOB(dob)) {
-            showAlert("Please enter a valid date of birth.");
+        if (!validateEmail(email)) {
+            showAlert("Enter a valid email");
             isValid = false;
             return;
         }
 
-        if (gender === '') {
-            showAlert("Select Patient's gender.");
-            isValid = false;
-            return;
-        }
-        
-        
-
-        if (status === '') {
-            showAlert("Status cannot be empty.");
-            isValid = false;
-            return;
-        } 
-        
-
-        if (phone === '') {
-            showAlert("Enter a phone number");
+        if (password === '') {
+            showAlert("Enter a password");
             isValid = false;
             return;
         }
 
-        // if (!validatePhone(phone)) {
-        //     $('#alert-container').append(`
-        //         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        //         Please enter a valid phone number. Begin with an the country code.
-        //         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        //         </div>
-        //     `);
-        //     isValid = false;
-        //     return;
-        // }
-
-        if (address === '') {
-            showAlert("Enter an address");
+        if (!validatePassword(password)) {
+            showAlert("Your password must be at least 8 characters long and include at least one uppercase letter (A-Z), one lowercase letter (a-z), one number (0-9), and one special character (e.g., @, $, !, %, *, ?, &). Make sure to avoid using spaces or unsupported characters");
             isValid = false;
             return;
         }
-
-
         
-
-        
-
         if (isValid) {
             $('#alert-container').append(`
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -105,14 +76,14 @@ $(document).ready(function() {
     // });
 
 
-    function validateDOB(dob) {
-        const dateRegex = /^\d{4}-([0]?[1-9]|1[0-2])-([0]?[1-9]|[12]\d|3[01])$/;
-        return dateRegex.test(dob);
+    function validateEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
     }
 
-    function validatePhone(phone) {
-        const dateRegex = /^\+?[1-9]\d{1,14}$/;
-        return dateRegex.test(phone);
+    function validatePassword(password) {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return passwordRegex.test(password);
     }
 
     function showAlert(message) {

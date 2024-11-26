@@ -99,12 +99,12 @@
                         <h4 class="modal-title mt-3 mb-2"><b>Edit User Details</b></h4>
                         <div id="alert-container"></div>
 
-                        <form method="POST" action="../../functions/users.inc.php">
+                        <form method="POST" id="myForm" action="../../functions/admin/updateUser.inc.php">
                             <input type="hidden" value="updateUser" name="type">
                             <div class="row mt-4">
                                 <div class="col">
                                     <label for="fname" class="form-label"><b>First Name*</b></label>
-                                    <input type="text" id="fname" class="form-control" placeholder="Enter first name" name="fname" required>
+                                    <input type="text" id="fname" class="form-control" placeholder="Enter first name" name="fname" >
                                 </div>
                                 <div class="col">
                                     <label for="mname" class="form-label"><b>Middle Name</b></label>
@@ -112,19 +112,29 @@
                                 </div>
                                 <div class="col">
                                     <label for="lname" class="form-label"><b>Last Name*</b></label>
-                                    <input type="text" id="lname" class="form-control" placeholder="Enter last name" name="lname" required>
+                                    <input type="text" id="lname" class="form-control" placeholder="Enter last name" name="lname" >
                                 </div>
                             </div>
 
                             <div class="row mt-4">
                                 <div class="col">
                                     <label for="email" class="form-label"><b>Email*</b></label>
-                                    <input type="email" id="email" class="form-control" placeholder="Enter last name" name="lname" required>
+                                    <input type="email" id="email" class="form-control" placeholder="Enter Email" name="email" >
                                 </div>
 
                                 <div class="col">
                                     <label for="password" class="form-label"><b>Password*</b></label>
-                                    <input type="password" id="password" class="form-control" placeholder="Enter Password" name="password" required>
+                                    <input type="text" id="password" class="form-control" placeholder="Enter Password" name="password">
+                                </div>
+
+                                <div class="col">
+                                    <label for="role" class="form-label"><b>Role*</b></label>
+                                    <select id="role" name="role" class="form-select" required>
+                                        <option value="">Select User Role</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="doctor">Doctor</option>
+                                        <option value="nurse">Nurse</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -215,7 +225,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../../assets/js/users/fetch_users.js"></script>
+    <script src="../../../assets/js/users/fetch_user.js"></script>
     <script src="../../../assets/js/delete_user.js"></script>
+    <script src="../../../assets/js/edit_user_modal.js"></script>
 
     <script src="../../../assets/js/users/userInfo-modal.js"></script>
     <script src="../../../assets/js/users/addUser.js"></script>

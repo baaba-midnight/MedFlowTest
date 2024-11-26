@@ -4,7 +4,7 @@ $(document).on('click', '.edit-btn', function() {
     console.log("Button clicked");
 //   $('#myModal').modal('show');
     const patientId = $(this).data('id');
-
+    console.log(patientId);
     // Send an AJAX request to fetch patient data
     $.ajax({
         url: '../../functions/manage_patients/fill_modal.php?id=' + patientId,  // Replace with your actual API endpoint

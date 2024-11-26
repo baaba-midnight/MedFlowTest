@@ -1,5 +1,5 @@
 <?php
-include './includes/config.inc.php';
+include '../includes/config.inc.php';
 
 session_start();
 
@@ -58,21 +58,21 @@ $conn -> close();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+DE+Grund:wght@100..400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="../../assets/css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="main-box">
 
         <div class="image-container d-none d-lg-block">
-            <img src="./assets/images/doctors.jpg" alt="">
+            <img src="../../assets/images/doctors.jpg" alt="">
         </div>
         
         <div class="form-container">
             <div>
                 <a href="./index.php" class="logo-home">
                     <div class="logo">
-                        <img class="responsive-img" src="./assets/images/medflow-logo.png" widtth="300" height="200" alt="MedFlow-logo">
+                        <img class="responsive-img" src="../../assets/images/medflow-logo.png" widtth="300" height="200" alt="MedFlow-logo">
                     </div>
                 </a>
             </div>
@@ -94,6 +94,6 @@ $conn -> close();
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./assets/js/login.js"></script>
+    <script src="../../assets/js/users/login.js"></script>
 </body>
 </html>

@@ -68,9 +68,10 @@
                     <img src="../../../assets/images/medflow-logo.png" widtth="200" height="100" alt="MedFlow-logo">
                 </div>
                 
-                <h4 class="modal-title mt-3 mb-2"><b>Add New Patient</b></h4>
+                <h4 class="modal-title mt-3 mb-2"><b>Edit Patient</b></h4>
                 <div id="alert-container"></div>
-                <form id="addPatientForm">
+                <form method="POST" id="myForm" action="../../functions/updatePatient.inc.php">
+                    <input type="hidden" type="text" value="1" name="id">
                     <div class="row mt-4">
                         <div class="col">
                         <label for="fname" class="form-label"><b>First Name*</b></label>
@@ -123,6 +124,15 @@
                                 <option value="discharged">Discharged</option>
                             </select>
                         </div>
+
+                        <div class="col">
+                            <label for="is_critical" class="form-label"><b>Is Critical?*</b></label>
+                            <select id="is_critical" name="is_critical" class="form-select" required>
+                                <option value="">Select Critical Status</option>
+                                <option value="TRUE">TRUE</option>
+                                <option value="FALSE">FALSE</option>
+                            </select>
+                        </div>
                     </div>
 
                     <label for="address" class="form-label mt-4"><b>Address*</b></label>
@@ -134,7 +144,7 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-custom" id="edit">Add Patient</button>
+                        <button type="submit" class="btn btn-custom" id="edit">Edit Patient</button>
                     </div>
                 </form>
             </div>
@@ -154,7 +164,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../../assets/js/fetch_patients.js"></script>
-    <script src="../../assets/js/edit_patient_modal.js"></script>
+    <script src="../../../assets/js/edit_patient_modal.js"></script>
     <script src="../../../assets/js/fetch_patient.js"></script>
     <script src="../../../assets/js/patientInfo-modal.js"></script>
     <script src="../../../assets/js/delete_patient.js"></script>

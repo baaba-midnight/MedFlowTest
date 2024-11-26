@@ -41,7 +41,7 @@ include "../../includes/config.inc.php";
                                 <div>Total Assigned Patients</div>
                                 <?php
                                 //Set it to session Id
-                                $user_id = 1;
+                                $user_id =2;
                                 $query = 'SELECT COUNT(*) AS assigned_patients FROM patients WHERE doctor_id = ?;';
                                 $stmt = $conn->prepare($query);
                                 $stmt->bind_param('i', $user_id);
@@ -89,6 +89,7 @@ include "../../includes/config.inc.php";
 
             <!-- Current Patients -->
             <div class="current-patients">
+                <div id="alert-container"></div>
                 <h5 class="mb-4">Current Patients</h5>
                 <div class="patient-list">
                     <div class="mb-4" id="patientList"></div>
