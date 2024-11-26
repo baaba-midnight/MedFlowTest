@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded',  () => {
 
     console.log(patientId);
 
-    const formElement = document.getElementById('editPatientForm');
+    const formElement = document.getElementById('myForm');
     console.log(formElement ? 'yes' : 'no');
 
     if (formElement) {

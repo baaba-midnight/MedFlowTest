@@ -27,7 +27,7 @@ function getPatients() {
                     CONCAT(u.first_name, ' ', u.last_name) as doctor_name
                 FROM patients p
                 JOIN appointments a ON p.id = a.patient_id
-                JOIN users u ON u.id = a.doctor_id
+                JOIN medFlow_users u ON u.id = a.doctor_id
                 WHERE p.status = 'inpatient' OR p.status = 'outpatient'
                 ORDER BY p.admission_date DESC;";
 
@@ -93,7 +93,7 @@ function getAppointments() {
                     CONCAT(u.first_name, ' ', u.last_name) as doctor_name,
                     a.`status`
                 FROM appointments a
-                JOIN users u ON u.id = a.doctor_id
+                JOIN medFlow_users u ON u.id = a.doctor_id
                 JOIN patients p ON p.id = a.patient_id
                 WHERE a.`status` = 'in_progress'";
 
@@ -124,7 +124,7 @@ function getStaff() {
         $query = "SELECT
                     CONCAT(u.first_name, ' ', u.last_name) AS username,
                     u.`role`
-                FROM Users u
+                FROM medflow_users u
                 WHERE role = 'doctor' OR role = 'nurse';";
             
         $stmt = $conn->prepare($query);

@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get Quick Stats
         $query = "SELECT
                     (SELECT COUNT(*) FROM patients WHERE `status` = 'inpatient' OR `status` = 'outpatient') as active_patients,
-                    (SELECT COUNT(*) FROM users) as total_staff,
+                    (SELECT COUNT(*) FROM medFlow_users) as total_staff,
                     (SELECT COUNT(*) FROM appointments WHERE `status` = 'in_progress') as pending_appointments,
                     (SELECT COUNT(*) FROM patients WHERE is_critical = TRUE) as critical_patients";
         

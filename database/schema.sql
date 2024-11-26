@@ -4,7 +4,7 @@ CREATE DATABASE hospital_management;
 USE hospital_management;
 
 -- Create the users table
-CREATE TABLE users (
+CREATE TABLE medFlow_users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),

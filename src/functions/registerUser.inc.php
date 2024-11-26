@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] === 'POST'){
 
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-    $query = 'SELECT id, first_name, last_name, `password`, `role` FROM users WHERE email = ?';
+    $query = 'SELECT id, first_name, last_name, `password`, `role` FROM medFlow_users WHERE email = ?';
     $stmt = $conn -> prepare($query);
     $stmt->bind_param('s', $email);
     $stmt->execute();
@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] === 'POST'){
     if($results -> num_rows > 0){
         echo "<script>alert(User already registered)</script>";
     } else {
-        $sql = "INSERT INTO users (first_name, middle_name, last_name, email, password, role)
+        $sql = "INSERT INTO medFlow_users (first_name, middle_name, last_name, email, password, role)
                 VALUES (?,?,?,?,?,?)";
 
         $stmt = $conn->prepare($sql);

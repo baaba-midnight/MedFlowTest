@@ -26,9 +26,9 @@ if($_SERVER["REQUEST_METHOD"] == 'GET'){
 FROM 
     patients
 LEFT JOIN 
-    users
+    medFlow_users
 ON 
-    patients.doctor_id = users.id
+    patients.doctor_id = medFlow_users.id
 WHERE 
     patients.id = ?";
     

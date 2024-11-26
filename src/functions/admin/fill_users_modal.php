@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == 'GET'){
     email,
     `password`
 FROM 
-    users
+    medFlow_users
 WHERE 
     id = ?;
         ";

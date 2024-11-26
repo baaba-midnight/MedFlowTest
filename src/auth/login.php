@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
         die("Dont leave field empty");
     }
 
-    $query = 'SELECT id, first_name, last_name, `password`, email, `role` FROM users WHERE email = ?';
+    $query = 'SELECT id, first_name, last_name, `password`, email, `role` FROM medFlow_users WHERE email = ?';
     $stmt = $conn -> prepare($query);
     $stmt->bind_param('s',$email);
     $stmt->execute();

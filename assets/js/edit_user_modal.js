@@ -11,6 +11,7 @@ $(document).ready(function() {
         const lname = $('#lname').val().trim();
         const email = $('#email').val().trim();
         const password = $('#password').val().trim();
+        const role = $('#role').val().trim();
 
         let isValid = true;
     
@@ -54,6 +55,12 @@ $(document).ready(function() {
 
         if (!validatePassword(password)) {
             showAlert("Your password must be at least 8 characters long and include at least one uppercase letter (A-Z), one lowercase letter (a-z), one number (0-9), and one special character (e.g., @, $, !, %, *, ?, &). Make sure to avoid using spaces or unsupported characters");
+            isValid = false;
+            return;
+        }
+
+        if (role === '') {
+            showAlert("Select a role");
             isValid = false;
             return;
         }
