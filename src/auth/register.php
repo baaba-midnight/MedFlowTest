@@ -11,8 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="../../assets/css/register.css">
+    <link rel="stylesheet" href="../../assets/css/auth.css">
 </head>
 <body>
     <div class="main-box">
@@ -23,7 +25,7 @@
         
         <div class="form-container">
             <div class="logo-home">
-                <a href="/index.php" >
+                <a href="../../index.php" >
                     <div class="d-flex justify-content-center align-items-center">
                         <div class="logo ms-5" >
                             <img class="ms-5" src="../../assets/images/medflow-logo.png" widtth="300" height="200" alt="MedFlow-logo">
@@ -50,17 +52,6 @@
 
                         <label>Last Name *</label>
                         <input type="text" placeholder="Enter last name" name="lname" id="lname">
-
-                        
-                        <label>Date of Birth *</label>
-                        <input type="date" placeholder="mm/dd/yyyy" name="dob" id="dob" >
-                    </div>
-                </div>
-
-                <!-- Contact Information -->
-                <div>
-                    <div class="form-box">
-                        
                     </div>
                 </div>
 
@@ -73,8 +64,9 @@
 
                         <label>Role *</label>
                         <select name="role-options" id="role-options" class="form-select">
-                            <option value="Doctor">Doctor</option>
-                            <option value="Nurse">Nurse</option>
+                            <option value="" default>Select Role</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="nurse">Nurse</option>
                         </select>
 
                         <label>Password *</label>
@@ -84,9 +76,15 @@
                         <input placeholder="Confirm Password" type="password" name = "password2" id="password2">    
                     </div>
                 </div>
-            
-            </form>
+
+                <div class="auth-links">
+                    <span>Already registered?</span>
+                    <a href="login.php" class="login-link">Log In</a>
+                </div>
+
                 <button id="register" class="btn mt-4">Register</button>
+            </form>
+                
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

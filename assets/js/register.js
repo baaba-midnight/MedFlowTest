@@ -8,7 +8,6 @@ $(document).ready(function() {
         const fname = $('#fname').val().trim();
         const mname = $('#mname').val().trim();
         const lname = $('#lname').val().trim();
-        const dob = $('#dob').val().trim();
         const role = $('#role-options').val().trim();
         const email = $('#email').val().trim();
         const password = $('#password').val().trim();
@@ -33,21 +32,9 @@ $(document).ready(function() {
             return;
         }
 
-        if (dob === '') {
-            showAlert("Pick date of birth.");
-            return;
-        }
-
-        if (!validateDOB(dob)) {
-            showAlert("Please enter a valid date of birth.");
-            return;
-        }
-
-
         if (email === '') {
             showAlert("Email cannot be empty.");
             return;
-            console.log("AMa")
         }
 
         if (!validateEmail(email)) {
@@ -59,7 +46,6 @@ $(document).ready(function() {
             showAlert("Choose a role.");
             return;
         }
-
 
         if (password === '') {
             showAlert("Enter a password.");
@@ -94,9 +80,6 @@ $(document).ready(function() {
 
     });
 
-
-    
-
     $('#register').click(function() {
         console.log("Button Clicked")
         $('#myForm').submit();
@@ -110,11 +93,6 @@ $(document).ready(function() {
     function validatePassword(password) {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         return passwordRegex.test(password);
-    }
-
-    function validateDOB(dob) {
-        const dateRegex = /^\d{4}-([0]?[1-9]|1[0-2])-([0]?[1-9]|[12]\d|3[01])$/;
-        return dateRegex.test(dob);
     }
 
     function showAlert(message) {

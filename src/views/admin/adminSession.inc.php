@@ -12,15 +12,15 @@ if (!isset($_SESSION['id'])) {
     header('Location: ../../auth/login.php');
     exit();
 } else {
-    // Check if role is not 2, then redirect to login
+    // Check if role is not admin, then redirect to login
     if ($_SESSION['role'] !== 'admin') {
         header('Location: ../../auth/login.php');
         exit();
     }
 
-    // If user is logged in and has an appropriate role
+    // If user is logged in, assign the appropriate role variables
     $userId = $_SESSION['id'];
-    $fname = $_SESSION['first_name'];
-    $lname = $_SESSION['last_name'];
+    $username = $_SESSION['full_name'];
+    $email = $_SESSION['email'];
     $role = $_SESSION['role'];
 }

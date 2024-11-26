@@ -1,6 +1,28 @@
 <?php
 include "../../includes/config.inc.php";
-$role = "doctor";
+
+if (session_start() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['id'])) {
+    // Redirect to login if user is not logged in
+    header('Location: ../../auth/login.php');
+    exit();
+} else {
+    // Check if role is not admin, then redirect to login
+    if ($_SESSION['role'] !== 'doctor') {
+        header('Location: ../../auth/login.php');
+        exit();
+    }
+
+    // If user is logged in, assign the appropriate role variables
+    $userId = $_SESSION['id'];
+    $username = $_SESSION['full_name'];
+    $email = $_SESSION['email'];
+    $role = $_SESSION['role'];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
