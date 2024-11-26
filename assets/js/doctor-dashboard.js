@@ -39,7 +39,7 @@ function generateTable(columns, data) {
 }
 
 $(document).ready(function () {
-    const id = 2;
+    const id = 3;
     const url = '../../functions/doctor/get_appointments.php?id=' + id ;
     const obj = $("#patientList");
     $.ajax({
@@ -57,7 +57,7 @@ $(document).ready(function () {
                         </div>
                         <div class="action-icons">
                             <a href="#" id="confirm" data-id="${patient.appointment_id}"><i class="bi bi-clipboard-check-fill fs-4"></i></a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient.id}"><i class="fas fa-edit fs-4"></i></a>
+                            <a href="#"><i class="fas fa-edit fs-4 open-btn" data-id="${patient.id}"></i></a>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">

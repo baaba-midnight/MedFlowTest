@@ -110,7 +110,7 @@ function updateTableWithData(users) {
                         <button class="action-btn remove-btn" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="${user["id"]}">
                             <span class="action-icon">🗑️</span> Remove
                         </button>
-                        <button class="action-btn open-btn" data-bs-toggle="modal" data-bs-target="#userDetails" data-id="${user["id"]}">
+                        <button class="action-btn open-btn" data-id="${user["id"]}">
                             <span class="action-icon">📂</span> Open
                         </button>
                     </div>

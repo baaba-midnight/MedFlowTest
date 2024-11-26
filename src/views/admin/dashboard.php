@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,12 +23,15 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <?php include "../../templates/header.php" ?>
-
-        <!-- Stats Row -->
+        <?php
+        $role = 'admin';
+        include "../../templates/header.php";
+        ?>
+        
         <div class="row">
-        <div class="row">
-                <div class="col-md-6">
+            <!-- Stats Row -->
+            <div class="col-6">
+                <div class="row-md-6">
                     <div class="stat-card primary">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -38,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="row-md-6">
                     <div class="stat-card dark">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -49,10 +53,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
+            
+                <div class="row-md-6">
                     <div class="stat-card dark">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -64,7 +66,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="row-md-6">
                     <div class="stat-card" style="background-color: #2F4F4F">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -76,14 +78,14 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Charts Row -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="chart-card">
-                    <h6 class="sm-4">Patient Status Distribution</h6>
-                    <canvas id="patient-status" width="500px" height="300px" border-radius=8px></canvas>
+            <!-- Charts Row -->
+            <div class="col-6">
+                <div class="row-md">
+                    <div class="chart-card">
+                        <h6 class="sm-4">Patient Status Distribution</h6>
+                        <canvas id="patient-status"  border-radius=8px></canvas>
+                    </div>
                 </div>
             </div>
         </div>

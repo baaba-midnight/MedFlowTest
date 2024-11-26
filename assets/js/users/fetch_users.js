@@ -30,13 +30,13 @@ fetch('../../functions/users.inc.php', {
                 <td>${user["role"]}</td>
                 <td>
                     <div class="selected-actions" id="selectedActions">
-                        <button type="button" class="action-btn edit-btn" data-id="${user["id"]}" data-bs-toggle="modal" data-bs-target="#editUserModal">
+                        <button type="button" class="action-btn edit-btn" data-id="${user["id"]}">
                             <span class="action-icon">✏️</span> Edit
                         </button>
                         <button class="action-btn remove-btn" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="${user["id"]}">
                             <span class="action-icon">🗑️</span> Remove
                         </button>
-                        <button class="action-btn open-btn" data-bs-toggle="modal" data-bs-target="#userDetails" data-id="${user["id"]}">
+                        <button class="action-btn open-btn" data-id="${user["id"]}">
                             <span class="action-icon">📂</span> Open
                         </button>
                     </div>

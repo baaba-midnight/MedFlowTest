@@ -12,29 +12,30 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
         die("Dont leave field empty");
     }
 
-    $query = 'SELECT user_id,user_password, userrole FROM Users WHERE email = ?';
+    $query = 'SELECT id, first_name, last_name `password`, `role` FROM users WHERE email = ?';
     $stmt = $conn -> prepare($query);
     $stmt->bind_param('s',$email);
     $stmt->execute();
     $results = $stmt -> get_result();
 
     if($results -> num_rows > 0){
-        //ideally you would have looped through it but because we know it is just one record in the db that is why we do this.
         $row = $results -> fetch_assoc();
-        $user_id = $row['user_id'];
-        $user_password = $row['user_password'];
-        $user_role = $row['userrole'];
+
+        $user_id = $row['id'];
+        $user_password = $row['password'];
+        $user_role = $row['role'];
+        $firstName = $row['first_name'];
+        $lastName = $row['last_name'];
 
         if (true){
             $_SESSION['id'] = $user_id;
-            $_SESSION['userrole'] = $user_role;
-            if ($user_role == 'Nurse'){
-                header("Location: ./modules/nurse/dashboard.php");
+            $_SESSION['role'] = $user_role;
+            if ($user_role == 'nurse'){
+                header("Location: ../modules/nurse/manage_patients.php");
             }elseif($user_role == 'Doctor'){
-                header("Location: ./modules/doctor/dashboard.php");
+                header("Location: ../modules/doctor/dashboard.php");
             }elseif($user_role == 'Admin'){
-                header("Location: ./modules/admin/dashboard.php");
-                echo "<h1>REGULAR</h1>";
+                header("Location: ../modules/admin/dashboard.php");
             }else{
                 header("Location: login.php");
             }
@@ -47,7 +48,6 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
     $stmt -> close();
 }
 $conn -> close();
-
 ?>
 <html lang="en">
 <head>

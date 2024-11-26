@@ -1,3 +1,7 @@
+<?php 
+$role = 'admin'
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -219,5 +223,6 @@
 
     <script src="../../../assets/js/users/userInfo-modal.js"></script>
     <script src="../../../assets/js/users/addUser.js"></script>
+    <sctip src="../../../assets/js/users/updateUser.js"></sctip>
 </body>
 </html>

@@ -60,7 +60,7 @@ function generateTable(columns, data) {
     return `
     <div class="space-y-6">
       <div class="bg-white rounded-md shadow overflow-x-auto">
-        <table class="w-full border-collapse">
+        <table class="w-full border-collapse flex-1 p-6 overflow-y-auto">
           <thead>
             <tr>
               ${columns.map(col => 

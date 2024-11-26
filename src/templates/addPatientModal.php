@@ -48,8 +48,8 @@
 
                     <div class="row mt-4">
                         <div class="col">
-                            <label for="doctorDropdown" class="form-label"><b>Assign Doctor*</b></label>
-                            <select id="doctorDropdown" name="doctorDropdown" class="form-select" required>
+                            <label for="doctorDropdownADD" class="form-label"><b>Assign Doctor*</b></label>
+                            <select id="doctorDropdownADD" name="doctorDropdownADD" class="form-select" required>
                                 <option value="">Select a Doctor</option>
                                 <!-- Doctors will be dynamically populated here -->
                             </select>
@@ -98,7 +98,11 @@
         fetch('../../functions/get_doctors.php')
             .then(response => response.json())
             .then(doctors => {
-                const dropdown = document.getElementById('doctorDropdown');
+                const dropdown = document.getElementById('doctorDropdownADD');
+                if (!dropdown) {
+                   console.error("NO DROPDOWN FOUND") 
+                }
+                
                 doctors.forEach(doctor => {
                     const option = document.createElement('option');
                     option.value = doctor.id;
@@ -109,5 +113,26 @@
             .catch(error => console.error('Error fetching doctors:', error));
 
             // Handle Form Submission in patients.inc.php
-    })
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('../../functions/get_doctors.php')
+            .then(response => response.json())
+            .then(doctors => {
+                const dropdown = document.getElementById('doctorDropdown');
+                if (!dropdown) {
+                   console.error("NO DROPDOWN FOUND") 
+                }
+                
+                doctors.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.id;
+                    option.textContent = `Dr. ${doctor.fullName}`;
+                    dropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching doctors:', error));
+
+            // Handle Form Submission in patients.inc.php
+    });
 </script>

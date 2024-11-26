@@ -52,7 +52,7 @@ fetch('../../functions/patients.inc.php', {
                         <button class="action-btn remove-btn" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="${patient["id"]}">
                             <span class="action-icon">🗑️</span> Remove
                         </button>
-                        <button class="action-btn open-btn" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient["id"]}">
+                        <button class="action-btn open-btn" data-id="${patient["id"]}">
                             <span class="action-icon">📂</span> Open
                         </button>
                     </div>

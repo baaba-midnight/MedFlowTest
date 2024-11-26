@@ -1,20 +1,25 @@
 <?php 
 $headerTitle = $headerTitle ?? 'Dashboard';
-$showSearchBox = $showSearchBox ?? true;
 $buttonContent = $buttonContent ?? '';
 ?>
 
 <div class="dashboard-header">
-    <h4 class="mb-0"><?php echo $headerTitle; ?></h4>
-    <div class="ms-auto d-flex align-items-center gap-3">
-        <?php if ($showSearchBox): ?>
-            <div class="input-group" style="width: 300px">
-                <input type="text" class="form-control" placeholder="Search...">
-                <button class="btn btn-dark" type="button" style="justify-content: space-between;">
-                    <i class="fas fa-search"></i>
-                </button>
+    <div class="row align-items-center">
+        <div class="col-auto">
+            <h4><?php echo $headerTitle; ?></h4>
+        </div>
+        <?php if ($role === 'nurse' || $role === 'doctor'): ?>
+            <div class="col-auto">
+                <div class="card text-center" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome, <span id="username">User</span></h5>
+                    </div>
+                </div>
             </div>
         <?php endif; ?>
+    </div>
+
+    <div class="ms-auto d-flex align-items-center gap-3">
 
         <?php if ($buttonContent != ''): ?>
             <?php if ($buttonContent === 'Add Patient'): ?>

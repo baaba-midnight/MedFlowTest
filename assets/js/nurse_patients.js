@@ -32,7 +32,7 @@ fetch('../../functions/nurse_patients.inc.php', {
                         <button class="generate-report action-btn" data-id="${patient["id"]}">
                             <span class="action-icon">📄</span> Report
                         </button>
-                        <button class="action-btn open-btn" data-bs-toggle="modal" data-bs-target="#displayModal" data-id="${patient["id"]}">
+                        <button class="action-btn open-btn" data-id="${patient["id"]}">
                             <span class="action-icon">📂</span> Open
                         </button>
                         <button class="action-btn" data-bs-toggle="modal" data-bs-target="#addAppointmentModal" data-id="${patient["id"]}">

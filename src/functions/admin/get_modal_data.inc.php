@@ -22,9 +22,9 @@ function getPatients() {
     try {
         $query = "SELECT
                     p.id,
-                    name,
+                    CONCAT(p.first_name, ' ', p.last_name) as `name`,
                     p.admission_date,
-                    u.username as doctor_name
+                    CONCAT(u.first_name, ' ', u.last_name) as doctor_name
                 FROM patients p
                 JOIN appointments a ON p.id = a.patient_id
                 JOIN users u ON u.id = a.doctor_id
@@ -32,21 +32,23 @@ function getPatients() {
                 ORDER BY p.admission_date DESC;";
 
         $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        $patientActive = [];
-            
-        while($row = $result->fetch_assoc()) {
-            $patientActive[] = [
-                'patientId' => $row['id'],
-                'name' => $row['name'],
-                'admissionDate' => $row['admission_date'],
-                'doctor' => $row['doctor_name']
-            ];
-        }
         
-        return $patientActive;
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            $patientActive = [];
+                
+            while($row = $result->fetch_assoc()) {
+                $patientActive[] = [
+                    'patientId' => $row['id'],
+                    'name' => $row['name'],
+                    'admissionDate' => $row['admission_date'],
+                    'doctor' => $row['doctor_name']
+                ];
+            }
+            
+            return $patientActive;
+        }
     } catch (Exception $e) {
         handleError($e);
     }
@@ -58,7 +60,7 @@ function getCriticalPatients() {
         // get critical patients
         $query = "SELECT
                     patients.id,
-                    patients.name
+                    CONCAT(patients.first_name, ' ', patients.last_name) as `name`
                 FROM patients
                 WHERE patients.is_critical = TRUE";
 
@@ -87,8 +89,8 @@ function getAppointments() {
     try {
         $query = "SELECT
                     a.created_at,
-                    p.name as patient_name,
-                    u.username as doctor_name,
+                    CONCAT(p.first_name,' ', p.last_name)  as patient_name,
+                    CONCAT(u.first_name, ' ', u.last_name) as doctor_name,
                     a.`status`
                 FROM appointments a
                 JOIN users u ON u.id = a.doctor_id
@@ -120,9 +122,9 @@ function getStaff() {
 
     try {
         $query = "SELECT
-                    username,
-                    role
-                FROM Users
+                    CONCAT(u.first_name, ' ', u.last_name) AS username,
+                    u.`role`
+                FROM Users u
                 WHERE role = 'doctor' OR role = 'nurse';";
             
         $stmt = $conn->prepare($query);

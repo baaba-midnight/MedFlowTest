@@ -107,6 +107,10 @@ body {
     justify-content: center;
 }
 
+.doctor-main {
+    padding: 20px;
+}
+
 .dashboard-header {
     background-color: white;
     padding: 15px;

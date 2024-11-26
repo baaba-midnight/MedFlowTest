@@ -11,21 +11,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/register.css">
+    <link rel="stylesheet" href="../../assets/css/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="main-box">
 
         <div class="image-container">
-            <img src="./assets/images/doctors.jpg" alt="doctors">
+            <img src="../../assets/images/doctors.jpg" alt="doctors">
         </div>
         
         <div class="form-container">
             <div class="logo-home">
                 <a href="/index.php" >
                     <div class="logo">
-                        <img src="./assets/images/medflow-logo.png" widtth="300" height="200" alt="MedFlow-logo">
+                        <img src="../../assets/images/medflow-logo.png" widtth="300" height="200" alt="MedFlow-logo">
                     </div>
                 </a>
             </div>
@@ -34,13 +34,16 @@
             <p>Please fill in your information to create an account</p>
             <div id="alert-container">
             </div>
-            <form id="myForm" action = "#" method = "POST">
+            <form id="myForm" action="../functions/registerUser.inc.php" method="POST">
                 <!-- Personal Information -->
                 <div>
                     <h6>Personal Information</h6>
                     <div class="form-box">
                         <label>First Name *</label>
                         <input type="text" placeholder="Enter first name" name="fname" id="fname" required>
+
+                        <label>Middle Name *</label>
+                        <input type="text" placeholder="Enter middle name" name="mname" id="mname" required>
 
                         <label>Last Name *</label>
                         <input type="text" placeholder="Enter last name" name="lname" id="lname" required>

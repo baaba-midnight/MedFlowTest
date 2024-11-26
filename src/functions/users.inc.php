@@ -96,56 +96,6 @@ function addUser($conn, $data) {
     }
 }
 
-function updateUser($conn, $data) {
-    try {
-        if (empty($data['id'])) {
-            throw new Exception("User ID is required");
-        }
-
-        $updates = [];
-        $params = [];
-        $types = "";
-
-        if (!empty($data['name'])) {
-            $updates[] = "username = ?";
-            $params[] = $data['name'];
-            $types .= "s";
-        }
-
-        if (!empty($data['password'])) {
-            $updates[] = "password = ?";
-            $params[] = password_hash($data['password'], PASSWORD_BCRYPT);
-            $types .= "s";
-        }
-
-        if (!empty($data['role'])) {
-            $updates[] = "role = ?";
-            $params[] = $data['role'];
-            $types .= "s";
-        }
-
-        if (empty($updates)) {
-            throw new Exception("No fields to update");
-        }
-
-        $sql = "UPDATE users SET " . implode(", ", $updates) . " WHERE id = ?";
-        $params[] = $data['id'];
-        $types .= "i";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param($types, ...$params);
-
-        if (!$stmt->execute()) {
-            throw new Exception("Failed to update user");
-        }
-
-        $stmt->close();
-        return ["message" => "User updated successfully"];
-    } catch (Exception $e) {
-        throw new Exception("Failed to update user: " . $e->getMessage());
-    }
-}
-
 function deleteUser($conn, $id) {
     try {
         $sql = "DELETE FROM users WHERE id = ?";
@@ -200,10 +150,6 @@ try {
 
         case 'addUser':
             sendResponse(addUser($conn, $data));
-            break;
-
-        case 'updateUser':
-            sendResponse(updateUser($conn, $data));
             break;
 
         case 'deleteUser':
